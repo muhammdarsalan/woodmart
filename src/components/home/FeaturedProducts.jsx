@@ -50,7 +50,7 @@ function ProductCardSlide({ product }) {
         )}
         <button
           onClick={handleWish}
-          className="absolute top-3 right-3 z-10 w-9 h-9 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-gold transition-colors"
+          className="absolute top-3 right-3 z-10 w-11 h-11 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-gold transition-colors"
           aria-label="Add to wishlist"
         >
           <Heart className={`w-4 h-4 ${isInWishlist ? 'fill-red-500 text-red-500' : 'text-darktext'}`} />
@@ -64,10 +64,10 @@ function ProductCardSlide({ product }) {
           className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-700"
           style={{ transition: 'transform 0.7s ease' }}
         />
-        <div className="absolute inset-x-0 bottom-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+        <div className="absolute inset-x-0 bottom-0 p-3 translate-y-0 transition-transform duration-300">
           <button
             onClick={handleAdd}
-            className="w-full bg-gold text-darktext text-sm font-medium py-2.5 rounded-sm hover:bg-gold-light transition-colors flex items-center justify-center gap-2 shadow-lg"
+            className="w-full min-h-11 bg-gold text-darktext text-sm font-medium py-2.5 rounded-sm hover:bg-gold-light transition-colors flex items-center justify-center gap-2 shadow-lg"
           >
             <ShoppingBag className="w-4 h-4" />
             Add to Cart
