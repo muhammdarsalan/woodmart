@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Eye, ShoppingBag } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -33,22 +33,24 @@ export default function ProductCard({
   showMoveToCart = false,
   onRemove,
 }) {
-  if (!product || !product.id) {
-    return null;
-  }
+  const productId = product?.id;
 
-  const productImages = Array.isArray(product.images) && product.images.length > 0
+  const productImages = Array.isArray(product?.images) && product.images.length > 0
     ? product.images
     : [FALLBACK_IMAGE];
   const primaryImage = productImages[0] || FALLBACK_IMAGE;
-  const productSlug = product.slug || String(product.id);
+  const productSlug = product?.slug || String(productId);
 
   const [isHovered, setIsHovered] = useState(false);
   const addToCart = useCartStore((s) => s.addItem);
   const openDrawer = useCartStore((s) => s.openDrawer);
   const toggleWishlist = useWishlistStore((s) => s.toggleItem);
-  const isInWishlist = useWishlistStore((s) => s.isInWishlist(product.id));
+  const isInWishlist = useWishlistStore((s) => (productId ? s.isInWishlist(productId) : false));
   const setQuickViewProduct = useUiStore((s) => s.setQuickViewProduct);
+
+  if (!product || !productId) {
+    return null;
+  }
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -115,11 +117,11 @@ export default function ProductCard({
             </div>
             <div className="flex items-center justify-between mt-4 flex-wrap gap-3">
               <PriceTag price={product.price || 0} originalPrice={product.originalPrice || 0} />
-              <div className="flex gap-2">
-                <button onClick={handleWishlist} className="p-2 border border-beige-dark rounded hover:border-gold transition-colors" aria-label="Toggle wishlist">
+              <div className="flex w-full sm:w-auto gap-2">
+                <button onClick={handleWishlist} className="min-h-11 min-w-11 p-2 border border-beige-dark rounded hover:border-gold transition-colors flex items-center justify-center" aria-label="Toggle wishlist">
                   <Heart className={`w-5 h-5 ${isInWishlist ? 'fill-red-500 text-red-500' : 'text-darktext'}`} />
                 </button>
-                <Button size="sm" variant="dark" onClick={handleAddToCart} icon={ShoppingBag}>
+                <Button size="sm" variant="dark" onClick={handleAddToCart} icon={ShoppingBag} className="min-h-11 flex-1 sm:flex-none">
                   {showMoveToCart ? 'Move to Cart' : 'Add to Cart'}
                 </Button>
               </div>
@@ -163,17 +165,17 @@ export default function ProductCard({
           className="w-full h-full object-cover object-center transition-transform duration-500"
           style={{ transform: isHovered ? 'scale(1.08)' : 'scale(1)' }}
         />
-        <div className={`absolute inset-0 bg-brown/30 flex items-center justify-center gap-3 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+        <div className="absolute inset-0 bg-brown/30 flex items-center justify-center gap-3 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
           <button
             onClick={handleQuickView}
-            className="p-2.5 bg-white rounded-full shadow hover:bg-gold transition-colors"
+            className="min-h-11 min-w-11 p-2.5 bg-white rounded-full shadow hover:bg-gold transition-colors flex items-center justify-center"
             aria-label="Quick view"
           >
             <Eye className="w-5 h-5 text-darktext" />
           </button>
           <button
             onClick={handleWishlist}
-            className="p-2.5 bg-white rounded-full shadow hover:bg-gold transition-colors"
+            className="min-h-11 min-w-11 p-2.5 bg-white rounded-full shadow hover:bg-gold transition-colors flex items-center justify-center"
             aria-label="Toggle wishlist"
           >
             <Heart className={`w-5 h-5 ${isInWishlist ? 'fill-red-500 text-red-500' : 'text-darktext'}`} />
@@ -187,11 +189,11 @@ export default function ProductCard({
         <p className="text-xs text-brown-light mt-1">{product.material || ''}</p>
         <StarRating rating={product.rating || 0} showCount count={product.reviewCount || 0} size="sm" className="mt-2" />
         <PriceTag price={product.price || 0} originalPrice={product.originalPrice || 0} size="sm" className="mt-2" />
-        <div className={`mt-3 transition-all duration-300 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 sm:opacity-100 sm:translate-y-0'}`}>
+        <div className="mt-3 opacity-100 translate-y-0 transition-all duration-300">
           <Button
             size="sm"
             variant="dark"
-            className="w-full"
+            className="w-full min-h-11"
             onClick={handleAddToCart}
             icon={ShoppingBag}
           >
