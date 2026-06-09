@@ -1,25 +1,43 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { categories } from '../../data/categories';
 import { fadeInUp, staggerContainer, scaleIn } from '../../utils/animations';
+import { categories } from '../../data/categories';
+
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&q=85&auto=format&fit=crop';
+
+const cardHoverVariants = {
+  rest: { y: 0, scale: 1 },
+  hover: { y: -8, transition: { duration: 0.3, ease: 'easeOut' } },
+};
+
+const imageHoverVariants = {
+  rest: { scale: 1 },
+  hover: { scale: 1.08, transition: { duration: 0.6, ease: 'easeOut' } },
+};
 
 export default function CategoryGrid() {
   return (
-    <section className="py-20 bg-cream">
+    <section className="py-20 md:py-28 bg-cream">
       <div className="max-w-7xl mx-auto px-4">
         <motion.div
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="flex items-end justify-between mb-10"
+          className="flex flex-col md:flex-row items-start md:items-end justify-between mb-10 gap-4"
         >
           <div>
-            <span className="section-tag">Collections</span>
-            <h2 className="font-serif text-3xl md:text-4xl text-darktext mt-2">Shop by Room</h2>
+            <span className="section-tag">Shop by Category</span>
+            <h2 className="font-serif text-3xl md:text-5xl text-darktext mt-3">Find Your Style</h2>
+            <p className="text-brown-light mt-3 max-w-xl">
+              Six carefully curated collections. From bedroom comfort to statement living room pieces.
+            </p>
           </div>
-          <Link to="/shop" className="text-gold hover:text-gold-light font-medium text-sm flex items-center gap-1 transition-colors">
+          <Link
+            to="/shop"
+            className="text-gold hover:text-gold-light font-medium text-sm flex items-center gap-1 transition-colors"
+          >
             View All <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
@@ -28,38 +46,53 @@ export default function CategoryGrid() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6"
         >
           {categories.map((cat, index) => (
             <motion.div
               key={cat.id}
               variants={scaleIn}
-              className={index === 0 ? 'sm:col-span-2' : ''}
+              className={index === 0 ? 'sm:col-span-2 lg:col-span-2 lg:row-span-1' : ''}
             >
-              <Link
-                to={`/shop?category=${cat.slug}`}
-                className="group relative block aspect-[16/10] rounded-lg overflow-hidden"
+              <motion.div
+                initial="rest"
+                whileHover="hover"
+                animate="rest"
+                variants={cardHoverVariants}
+                className="h-full"
               >
-                <img
-                  src={cat.image}
-                  alt={cat.name}
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div
-                  className="absolute inset-0"
-                  style={{ background: 'linear-gradient(0deg, rgba(28,10,0,0.90) 0%, rgba(28,10,0,0.2) 60%, transparent 100%)' }}
-                />
-                <div className="absolute bottom-0 left-0 right-0 p-6 group-hover:-translate-y-2 transition-transform duration-300">
-                  <span className="text-2xl mb-2 block">{cat.icon}</span>
-                  <h3 className="font-serif text-xl text-white">{cat.name}</h3>
-                  <p className="text-white/60 text-sm mt-1">{cat.productCount} products</p>
-                  <span className="inline-flex items-center justify-center w-8 h-8 bg-gold text-darktext rounded-full mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ArrowRight className="w-4 h-4" />
-                  </span>
-                </div>
-              </Link>
+                <Link
+                  to={`/shop?category=${cat.slug}`}
+                  className="group relative block h-[320px] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                >
+                  <motion.img
+                    variants={imageHoverVariants}
+                    src={cat.image}
+                    alt={cat.name}
+                    loading="lazy"
+                    onError={(e) => { e.target.onerror = null; e.target.src = FALLBACK_IMAGE; }}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: 'linear-gradient(0deg, rgba(28,10,0,0.95) 0%, rgba(28,10,0,0.5) 50%, rgba(28,10,0,0.1) 100%)' }}
+                  />
+                  <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                    <span className="inline-block w-fit px-3 py-1 bg-gold/20 border border-gold/40 text-gold-light text-[10px] uppercase tracking-widest rounded-full mb-3 backdrop-blur-sm">
+                      {cat.productCount}+ products
+                    </span>
+                    <h3 className="font-serif text-2xl md:text-3xl text-white mb-1">{cat.name}</h3>
+                    <p className="text-white/70 text-sm mb-4 line-clamp-2">{cat.description}</p>
+                    <span className="inline-flex items-center gap-2 text-gold text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      Explore Collection
+                      <span className="w-7 h-7 bg-gold text-darktext rounded-full flex items-center justify-center group-hover:translate-x-1 transition-transform">
+                        <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </span>
+                  </div>
+                </Link>
+              </motion.div>
             </motion.div>
           ))}
         </motion.div>

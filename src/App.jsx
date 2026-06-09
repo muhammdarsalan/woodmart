@@ -8,6 +8,8 @@ import CartDrawer from './components/layout/CartDrawer';
 import WhatsAppButton from './components/ui/WhatsAppButton';
 import ScrollToTop from './components/ui/ScrollToTop';
 import PageTransition from './components/ui/PageTransition';
+import LoadingScreen from './components/ui/LoadingScreen';
+import CustomCursor from './components/ui/CustomCursor';
 import { PageSkeleton } from './components/ui/Skeleton';
 import ErrorBoundary from './components/ErrorBoundary';
 import { useScrollToTop } from './hooks/useScrollToTop';
@@ -178,6 +180,7 @@ function AppRoutes() {
       <CartDrawer />
       <WhatsAppButton />
       <ScrollToTop />
+      <CustomCursor />
     </>
   );
 }
@@ -185,6 +188,7 @@ function AppRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
+      <LoadingScreen />
       <Toaster
         position="top-right"
         toastOptions={{

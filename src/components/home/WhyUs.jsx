@@ -11,13 +11,13 @@ const features = [
 ];
 
 const counters = [
-  { end: 2400, suffix: '+', label: 'Happy Clients' },
-  { end: 500, suffix: '+', label: 'Products' },
-  { end: 15, suffix: '+', label: 'Years Experience' },
-  { end: 3, suffix: '', label: 'Showrooms' },
+  { end: 2400, suffix: '+', label: 'Happy Clients', duration: 2000 },
+  { end: 500, suffix: '+', label: 'Products', duration: 1500 },
+  { end: 15, suffix: '+', label: 'Years Experience', duration: 1000 },
+  { end: 3, suffix: '', label: 'Showrooms', duration: 800 },
 ];
 
-function AnimatedCounter({ end, suffix, label }) {
+function AnimatedCounter({ end, suffix, duration, label }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const [started, setStarted] = useState(false);
@@ -27,7 +27,7 @@ function AnimatedCounter({ end, suffix, label }) {
       ([entry]) => {
         if (entry.isIntersecting && !started) setStarted(true);
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -35,7 +35,6 @@ function AnimatedCounter({ end, suffix, label }) {
 
   useEffect(() => {
     if (!started) return undefined;
-    const duration = 2000;
     const steps = 60;
     const increment = end / steps;
     let current = 0;
@@ -49,23 +48,35 @@ function AnimatedCounter({ end, suffix, label }) {
       }
     }, duration / steps);
     return () => clearInterval(timer);
-  }, [started, end]);
+  }, [started, end, duration]);
 
   return (
     <div ref={ref} className="text-center">
-      <p className="font-serif text-4xl text-gold">{count.toLocaleString()}{suffix}</p>
-      <p className="text-lighttext text-sm mt-1">{label}</p>
+      <p className="font-serif text-4xl md:text-5xl text-gold mb-1" style={{ fontFamily: '"Playfair Display", serif' }}>
+        {count.toLocaleString()}{suffix}
+      </p>
+      <p className="text-sm uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.65)' }}>{label}</p>
     </div>
   );
 }
 
 export default function WhyUs() {
   return (
-    <section className="py-20 section-dark bg-brown relative overflow-hidden">
+    <section
+      className="py-20 md:py-28 relative overflow-hidden"
+      style={{ background: '#1C0A00', color: '#FFFFFF' }}
+    >
       <div
         className="absolute inset-0 opacity-5"
         style={{
           backgroundImage: 'repeating-linear-gradient(0deg, #C49A2A 0px, #C49A2A 1px, transparent 1px, transparent 30px)',
+        }}
+      />
+      <div
+        className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full opacity-20 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, #C49A2A 0%, transparent 70%)',
+          transform: 'translate(20%, -20%)',
         }}
       />
       <div className="max-w-7xl mx-auto px-4 relative">
@@ -76,33 +87,51 @@ export default function WhyUs() {
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <span className="section-tag text-gold-light">Why Wood Mart</span>
-          <h2 className="font-serif text-3xl md:text-4xl text-white mt-2">Crafted with Purpose</h2>
+          <span className="section-tag" style={{ color: '#E8B84B' }}>Why Wood Mart</span>
+          <h2
+            className="font-serif text-3xl md:text-5xl mt-3"
+            style={{ color: '#FFFFFF' }}
+          >
+            Crafted with Purpose
+          </h2>
+          <p
+            className="mt-4 max-w-2xl mx-auto"
+            style={{ color: 'rgba(255,255,255,0.7)' }}
+          >
+            Four reasons why 2,400+ Pakistani families trust us with their homes.
+          </p>
         </motion.div>
 
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.2 }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
         >
           {features.map((feature) => (
             <motion.div
               key={feature.title}
               variants={scaleIn}
-              className="bg-brown-mid/50 border border-gold/30 rounded-lg p-6 text-center hover:border-gold/50 transition-colors"
+              className="rounded-lg p-6 text-center transition-all duration-300 hover:scale-[1.03]"
+              style={{
+                background: 'rgba(46, 18, 0, 0.5)',
+                border: '1px solid rgba(196,154,42,0.3)',
+              }}
             >
-              <div className="w-14 h-14 border border-gold/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <feature.icon className="w-7 h-7 text-gold" />
+              <div
+                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                style={{ border: '1px solid rgba(196,154,42,0.4)' }}
+              >
+                <feature.icon className="w-7 h-7" style={{ color: '#C49A2A' }} />
               </div>
-              <h3 className="font-serif text-lg text-white mb-2">{feature.title}</h3>
-              <p className="text-beige-muted text-sm leading-relaxed">{feature.description}</p>
+              <h3 className="font-serif text-lg mb-2" style={{ color: '#FFFFFF' }}>{feature.title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>{feature.description}</p>
             </motion.div>
           ))}
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 border-t border-gold/20">
           {counters.map((counter) => (
             <AnimatedCounter key={counter.label} {...counter} />
           ))}

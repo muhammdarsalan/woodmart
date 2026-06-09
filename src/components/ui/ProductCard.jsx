@@ -33,12 +33,10 @@ export default function ProductCard({
   showMoveToCart = false,
   onRemove,
 }) {
-  // CRITICAL: Never crash, never return null silently for valid data
   if (!product || !product.id) {
     return null;
   }
 
-  // Defensive field reads
   const productImages = Array.isArray(product.images) && product.images.length > 0
     ? product.images
     : [FALLBACK_IMAGE];
@@ -88,13 +86,13 @@ export default function ProductCard({
     }
   };
 
-  const cardClass = 'group bg-white rounded-lg border border-beige-dark overflow-hidden hover:border-gold hover:shadow-lg transition-all';
+  const cardClass = 'group bg-white rounded-lg border border-beige-dark overflow-hidden hover:border-gold hover:shadow-xl transition-all duration-300';
 
   if (viewMode === 'list') {
     return (
       <motion.div variants={fadeInUp} className={`relative ${cardClass}`}>
         <div className="flex flex-col sm:flex-row">
-          <Link to={`/shop/${productSlug}`} className="relative sm:w-64 shrink-0 aspect-[4/3] sm:aspect-auto overflow-hidden">
+          <Link to={`/shop/${productSlug}`} className="relative sm:w-64 shrink-0 aspect-[4/3] sm:aspect-auto overflow-hidden product-img-container">
             {!product.inStock && <Badge type="outofstock" />}
             {product.badge && product.inStock && <Badge type={badgeTypeMap[product.badge] || 'new'} text={product.badge} />}
             <img
@@ -103,7 +101,7 @@ export default function ProductCard({
               loading="lazy"
               decoding="async"
               onError={handleImageError}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400"
+              className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-500"
             />
           </Link>
           <div className="flex-1 p-5 flex flex-col justify-between">
@@ -153,7 +151,7 @@ export default function ProductCard({
           ×
         </button>
       )}
-      <Link to={`/shop/${productSlug}`} className="block relative aspect-[4/3] overflow-hidden">
+      <Link to={`/shop/${productSlug}`} className="block relative aspect-[4/3] overflow-hidden product-img-container">
         {!product.inStock && <Badge type="outofstock" />}
         {product.badge && product.inStock && <Badge type={badgeTypeMap[product.badge] || 'new'} text={product.badge} />}
         <img
@@ -162,9 +160,10 @@ export default function ProductCard({
           loading="lazy"
           decoding="async"
           onError={handleImageError}
-          className={`w-full h-full object-cover transition-transform duration-400 ${isHovered ? 'scale-105' : 'scale-100'}`}
+          className="w-full h-full object-cover object-center transition-transform duration-500"
+          style={{ transform: isHovered ? 'scale(1.08)' : 'scale(1)' }}
         />
-        <div className={`absolute inset-0 bg-brown/20 flex items-center justify-center gap-3 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`absolute inset-0 bg-brown/30 flex items-center justify-center gap-3 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
           <button
             onClick={handleQuickView}
             className="p-2.5 bg-white rounded-full shadow hover:bg-gold transition-colors"

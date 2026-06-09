@@ -26,53 +26,35 @@ const makeReviews = (productName, seed) => [
 ];
 
 const subcategoryMapping = {
-  'living-room': {
-    'sofas-sectionals': 'Sofas & Sectionals',
-    'coffee-tables': 'Coffee Tables',
-    'tv-units': 'TV Units & Entertainment',
-    'bookshelves': 'Bookshelves & Display',
-    'side-tables': 'Side Tables',
-    'recliners': 'Recliners',
-  },
-  'bedroom': {
+  bedroom: {
     'beds': 'Beds & Bed Frames',
-    'wardrobes': 'Wardrobes & Almirahs',
     'dressers': 'Dressers & Mirrors',
-    'nightstands': 'Nightstands',
-    'chest-of-drawers': 'Chest of Drawers',
-    'vanity-tables': 'Vanity Tables',
+    'side-tables': 'Side Tables & Nightstands',
   },
-  'dining': {
-    'dining-tables': 'Dining Tables',
-    'dining-chairs': 'Dining Chairs',
-    'china-cabinets': 'China Cabinets',
-    'bar-stools': 'Bar Stools',
-    'buffet-tables': 'Buffet Tables',
-    'corner-cabinets': 'Corner Cabinets',
+  sofas: {
+    'three-seater': 'Three-Seater Sofas',
+    'l-shaped': 'L-Shaped Sofas',
+    'sofa-sets': 'Sofa Sets',
   },
-  'office': {
-    'executive-desks': 'Executive Desks',
-    'office-chairs': 'Office Chairs',
-    'bookshelves-office': 'Bookshelves',
-    'filing-cabinets': 'Filing Cabinets',
-    'meeting-tables': 'Meeting Tables',
-    'reception-desks': 'Reception Desks',
+  'coffee-tables': {
+    'lift-top': 'Lift-Top Coffee Tables',
+    'storage': 'Storage Coffee Tables',
+    'designer': 'Designer Coffee Tables',
   },
-  'outdoor': {
-    'garden-chairs': 'Garden Chairs',
-    'outdoor-tables': 'Outdoor Tables',
-    'swing-sets': 'Swing Sets',
-    'loungers': 'Loungers',
-    'benches': 'Benches',
-    'planters-stands': 'Planters & Stands',
+  'dining-tables': {
+    '4-seater': '4-Seater Dining',
+    '6-seater': '6-Seater Dining',
+    '8-seater': '8-Seater Dining',
   },
-  'kids': {
-    'kids-beds': 'Kids Beds',
-    'study-desks': 'Study Desks',
-    'toy-storage': 'Toy Storage',
-    'kids-wardrobes': 'Kids Wardrobes',
-    'bean-bags': 'Bean Bags',
-    'bunk-beds': 'Bunk Beds',
+  wardrobes: {
+    'sliding': 'Sliding Wardrobes',
+    'hinged': 'Hinged Wardrobes',
+    'walk-in': 'Walk-in Wardrobes',
+  },
+  'coffee-chairs': {
+    'lounge': 'Lounge Chairs',
+    'accent': 'Accent Chairs',
+    'recliners': 'Recliners',
   },
 };
 
@@ -80,41 +62,20 @@ export const getSubcategoryName = (categorySlug, subcategorySlug) => {
   return subcategoryMapping[categorySlug]?.[subcategorySlug] || subcategorySlug;
 };
 
+// ALL available bed images (52 files)
+const BED_IMAGES = ["bed-1.jpeg", "bed-13.jpeg", "bed-15.jpeg", "bed-16.jpeg", "bed-17.jpeg", "bed-18.jpeg", "bed-19.jpeg", "bed-2.jpeg", "bed-20.jpeg", "bed-21.jpeg", "bed-22.2.jpeg", "bed-22.jpeg", "bed-23.jpeg", "bed-24.jpeg", "bed-25.jpeg", "bed-26.jpeg", "bed-27.jpeg", "bed-28.jpeg", "bed-29.jpeg", "bed-3.jpeg", "bed-30.jpeg", "bed-31.jpeg", "bed-32.jpeg", "bed-33.jpeg", "bed-34.jpeg", "bed-35.jpeg", "bed-36.jpeg", "bed-37.jpeg", "bed-38.jpeg", "bed-39.jpeg", "bed-4.jpeg", "bed-40.jpeg", "bed-42.jpeg", "bed-43.jpeg", "bed-44.jpeg", "bed-45.jpeg", "bed-46.jpeg", "bed-48.jpeg", "bed-5.jpeg", "bed-50.jpeg", "bed-51.jpeg", "bed-52.jpeg", "bed-53.jpeg", "bed-54.jpeg", "bed-55.jpeg", "bed-56.jpeg", "bed-57.jpeg", "bed-6.jpeg", "bed-7.jpeg", "bed-8.jpeg", "bed-9.jpeg", "bed.jpeg"];
+
+// ALL available sofa images (47 files)
+const SOFA_IMAGES = ["sofa-1.jpeg", "sofa-10.jpeg", "sofa-11.jpeg", "sofa-12.jpeg", "sofa-13.jpeg", "sofa-14.jpeg", "sofa-15.jpeg", "sofa-16.jpeg", "sofa-17.jpeg", "sofa-18.jpeg", "sofa-19.jpeg", "sofa-2.jpeg", "sofa-20.jpeg", "sofa-21.jpeg", "sofa-22.jpeg", "sofa-23.jpeg", "sofa-24.jpeg", "sofa-25.jpeg", "sofa-26.jpeg", "sofa-27.jpeg", "sofa-29.jpeg", "sofa-3.jpeg", "sofa-4.jpeg", "sofa-40.jpeg", "sofa-43.jpeg", "sofa-44.jpeg", "sofa-45.jpeg", "sofa-46.jpeg", "sofa-47.jpeg", "sofa-48.jpeg", "sofa-49.jpeg", "sofa-5.jpeg", "sofa-50.jpeg", "sofa-51.jpeg", "sofa-52.2.jpeg", "sofa-52.jpeg", "sofa-53.jpeg", "sofa-54.jpeg", "sofa-57.jpeg", "sofa-58.jpeg", "sofa-59.jpeg", "sofa-6.jpeg", "sofa-60.jpeg", "sofa-64.jpeg", "sofa-7.jpeg", "sofa-8.jpeg", "sofa-9.jpeg"];
+
 const imageLibrary = {
-  beds: [
-    '/images/products/beds/bed-1.jpeg',
-    '/images/products/beds/bed-2.jpeg',
-    '/images/products/beds/bed-3.jpeg',
-    '/images/products/beds/bed-4.jpeg',
-    '/images/products/beds/bed-5.jpeg',
-    '/images/products/beds/bed-6.jpeg',
-    '/images/products/beds/bed-7.jpeg',
-    '/images/products/beds/bed-8.jpeg',
-    '/images/products/beds/bed-9.jpeg',
-  ],
-  sofas: [
-    '/images/products/sofas/sofa-1.jpeg',
-    '/images/products/sofas/sofa-2.jpeg',
-    '/images/products/sofas/sofa-3.jpeg',
-    '/images/products/sofas/sofa-4.jpeg',
-    '/images/products/sofas/sofa-5.jpeg',
-    '/images/products/sofas/sofa-6.jpeg',
-    '/images/products/sofas/sofa-7.jpeg',
-    '/images/products/sofas/sofa-8.jpeg',
-    '/images/products/sofas/sofa-9.jpeg',
-    '/images/products/sofas/sofa-10.jpeg',
-  ],
+  beds: BED_IMAGES.map((n) => `/images/products/beds/${n}`),
+  sofas: SOFA_IMAGES.map((n) => `/images/products/sofas/${n}`),
   unsplash: {
-    sofa: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80&auto=format&fit=crop',
-    bed: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?w=800&q=80&auto=format&fit=crop',
-    wardrobe: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop',
-    dining: 'https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?w=800&q=80&auto=format&fit=crop',
-    office: 'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=800&q=80&auto=format&fit=crop',
-    chair: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80&auto=format&fit=crop',
-    coffeeTable: 'https://images.unsplash.com/photo-1532372320572-cda25653a26d?w=800&q=80&auto=format&fit=crop',
-    tvUnit: 'https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800&q=80&auto=format&fit=crop',
-    outdoor: 'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&q=80&auto=format&fit=crop',
-    kids: 'https://images.unsplash.com/photo-1617104551722-3b2d51366ba8?w=800&q=80&auto=format&fit=crop',
+    coffeeTable: 'https://images.unsplash.com/photo-1532372320572-cda25653a26d?w=1200&q=85&auto=format&fit=crop',
+    dining: 'https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?w=1200&q=85&auto=format&fit=crop',
+    wardrobe: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85&auto=format&fit=crop',
+    chair: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=85&auto=format&fit=crop',
   },
 };
 
@@ -122,84 +83,84 @@ let bedIndex = 0;
 let sofaIndex = 0;
 
 function getProductImages(product) {
-  const { category, subcategory, id } = product;
+  const { category, subcategory } = product;
   let images = [];
 
-  if (category === 'Bedroom' && (subcategory === 'Beds' || subcategory === 'Beds & Bed Frames')) {
+  if (category === 'Bedroom' && subcategory === 'Beds & Bed Frames') {
     const bedCount = imageLibrary.beds.length;
     images = [
-      imageLibrary.beds[bedIndex % bedCount],
-      imageLibrary.beds[(bedIndex + 1) % bedCount],
-      imageLibrary.beds[(bedIndex + 2) % bedCount],
-      imageLibrary.beds[(bedIndex + 3) % bedCount],
+      imageLibrary.beds[(bedIndex * 2) % bedCount],
+      imageLibrary.beds[(bedIndex * 2 + 13) % bedCount],
+      imageLibrary.beds[(bedIndex * 2 + 27) % bedCount],
+      imageLibrary.beds[(bedIndex * 2 + 41) % bedCount],
     ];
     bedIndex++;
-  } else if (category === 'Living Room' && (subcategory === 'Sofas' || subcategory === 'Sofas & Sectionals')) {
+  } else if (category === 'Bedroom' && subcategory === 'Dressers & Mirrors') {
+    const bedCount = imageLibrary.beds.length;
+    const offset = 5;
+    images = [
+      imageLibrary.beds[(bedIndex + offset) % bedCount],
+      imageLibrary.beds[(bedIndex + offset + 11) % bedCount],
+      imageLibrary.beds[(bedIndex + offset + 23) % bedCount],
+      imageLibrary.beds[(bedIndex + offset + 37) % bedCount],
+    ];
+    bedIndex++;
+  } else if (category === 'Bedroom' && subcategory === 'Side Tables & Nightstands') {
+    const bedCount = imageLibrary.beds.length;
+    const offset = 17;
+    images = [
+      imageLibrary.beds[(bedIndex + offset) % bedCount],
+      imageLibrary.beds[(bedIndex + offset + 7) % bedCount],
+      imageLibrary.beds[(bedIndex + offset + 19) % bedCount],
+      imageLibrary.beds[(bedIndex + offset + 31) % bedCount],
+    ];
+    bedIndex++;
+  } else if (category === 'Sofas') {
     const sofaCount = imageLibrary.sofas.length;
     images = [
-      imageLibrary.sofas[sofaIndex % sofaCount],
-      imageLibrary.sofas[(sofaIndex + 1) % sofaCount],
-      imageLibrary.sofas[(sofaIndex + 2) % sofaCount],
-      imageLibrary.sofas[(sofaIndex + 3) % sofaCount],
+      imageLibrary.sofas[(sofaIndex * 2) % sofaCount],
+      imageLibrary.sofas[(sofaIndex * 2 + 9) % sofaCount],
+      imageLibrary.sofas[(sofaIndex * 2 + 19) % sofaCount],
+      imageLibrary.sofas[(sofaIndex * 2 + 31) % sofaCount],
     ];
     sofaIndex++;
-  } else if (category === 'Kids' && (subcategory === 'Beds' || subcategory === 'Kids Beds' || subcategory === 'Bunk Beds')) {
+  } else if (category === 'Coffee Chairs') {
+    const sofaCount = imageLibrary.sofas.length;
+    const offset = 11;
     images = [
-      imageLibrary.unsplash.kids,
-      imageLibrary.unsplash.bed,
-      imageLibrary.unsplash.kids,
-      imageLibrary.unsplash.bed,
+      imageLibrary.sofas[(sofaIndex + offset) % sofaCount],
+      imageLibrary.sofas[(sofaIndex + offset + 7) % sofaCount],
+      imageLibrary.sofas[(sofaIndex + offset + 17) % sofaCount],
+      imageLibrary.sofas[(sofaIndex + offset + 29) % sofaCount],
     ];
-  } else if (category === 'Living Room' && subcategory === 'Coffee Tables') {
+    sofaIndex++;
+  } else if (category === 'Coffee Tables') {
     images = [
       imageLibrary.unsplash.coffeeTable,
-      imageLibrary.unsplash.sofa,
       imageLibrary.unsplash.coffeeTable,
-      imageLibrary.unsplash.sofa,
+      imageLibrary.unsplash.coffeeTable,
+      imageLibrary.unsplash.coffeeTable,
     ];
-  } else if (category === 'Living Room' && (subcategory === 'TV Units' || subcategory === 'TV Units & Entertainment')) {
-    images = [
-      imageLibrary.unsplash.tvUnit,
-      imageLibrary.unsplash.sofa,
-      imageLibrary.unsplash.tvUnit,
-      imageLibrary.unsplash.sofa,
-    ];
-  } else if (category === 'Dining') {
+  } else if (category === 'Dining Tables') {
     images = [
       imageLibrary.unsplash.dining,
-      imageLibrary.unsplash.chair,
       imageLibrary.unsplash.dining,
-      imageLibrary.unsplash.chair,
+      imageLibrary.unsplash.dining,
+      imageLibrary.unsplash.dining,
     ];
-  } else if (category === 'Office') {
-    images = [
-      imageLibrary.unsplash.office,
-      imageLibrary.unsplash.chair,
-      imageLibrary.unsplash.office,
-      imageLibrary.unsplash.chair,
-    ];
-  } else if (category === 'Bedroom' && (subcategory === 'Wardrobes' || subcategory === 'Wardrobes & Almirahs')) {
+  } else if (category === 'Wardrobes') {
     images = [
       imageLibrary.unsplash.wardrobe,
-      imageLibrary.unsplash.bed,
       imageLibrary.unsplash.wardrobe,
-      imageLibrary.unsplash.bed,
-    ];
-  } else if (category === 'Outdoor') {
-    images = [
-      imageLibrary.unsplash.outdoor,
-      imageLibrary.unsplash.chair,
-      imageLibrary.unsplash.outdoor,
-      imageLibrary.unsplash.dining,
+      imageLibrary.unsplash.wardrobe,
+      imageLibrary.unsplash.wardrobe,
     ];
   } else {
-    const unsplashList = Object.values(imageLibrary.unsplash).filter(url => typeof url === 'string');
-    const idx = id % unsplashList.length;
     images = [
-      unsplashList[idx],
-      unsplashList[(idx + 1) % unsplashList.length],
-      unsplashList[(idx + 2) % unsplashList.length],
-      unsplashList[(idx + 3) % unsplashList.length],
+      imageLibrary.unsplash.chair,
+      imageLibrary.unsplash.chair,
+      imageLibrary.unsplash.chair,
+      imageLibrary.unsplash.chair,
     ];
   }
 
@@ -207,38 +168,138 @@ function getProductImages(product) {
 }
 
 const productsData = [
-  { id: 1, slug: 'heritage-sheesham-sofa', name: 'Heritage Sheesham Sofa', category: 'Living Room', subcategory: 'Sofas', shortDesc: 'Three-seater solid Sheesham sofa with premium upholstery.', description: '<p>Handcrafted from premium Sheesham wood with high-density foam cushions and stain-resistant fabric. Features traditional mortise-and-tenon joinery for lasting durability. Perfect centerpiece for your living room.</p>', price: 185000, originalPrice: 220000, material: 'Sheesham', colors: [{ name: 'Walnut Brown', hex: '#5c3d2e' }, { name: 'Natural Teak', hex: '#8b6914' }, { name: 'Charcoal Grey', hex: '#4a4a4a' }], dimensions: { width: 84, height: 34, depth: 36, unit: 'inches' }, weight: '95 kg', rating: 4.8, reviewCount: 47, badge: 'Bestseller', seed: 'sofa1', inStock: true, stockCount: 12, isNew: false, isFeatured: true, isOnSale: true, tags: ['sofa', 'living room', 'sheesham'], sku: 'WM-LR-SF-001' },
-  { id: 2, slug: 'modern-lift-coffee-table', name: 'Modern Lift Coffee Table', category: 'Living Room', subcategory: 'Coffee Tables', shortDesc: 'Lift-top coffee table with hidden storage compartment.', description: '<p>Innovative lift-top mechanism reveals hidden storage for remotes, magazines, and blankets. Crafted from engineered wood with walnut veneer finish. Soft-close hinges for smooth operation.</p>', price: 45000, originalPrice: 52000, material: 'Walnut', colors: [{ name: 'Dark Walnut', hex: '#3e2723' }, { name: 'Espresso', hex: '#2c1810' }], dimensions: { width: 48, height: 18, depth: 24, unit: 'inches' }, weight: '28 kg', rating: 4.6, reviewCount: 32, badge: 'Sale', seed: 'coffee1', inStock: true, stockCount: 20, isNew: false, isFeatured: true, isOnSale: true, tags: ['coffee table', 'storage', 'living room'], sku: 'WM-LR-CT-002' },
-  { id: 3, slug: 'elegance-tv-unit', name: 'Elegance TV Unit', category: 'Living Room', subcategory: 'TV Units', shortDesc: 'Wall-mounted TV unit with cable management and shelves.', description: '<p>Sleek wall-mounted design accommodates TVs up to 65 inches. Built-in cable management, tempered glass shelves, and LED backlighting option. MDF construction with premium laminate finish.</p>', price: 68000, originalPrice: 75000, material: 'MDF', colors: [{ name: 'White Oak', hex: '#d4c4a8' }, { name: 'Matte Black', hex: '#1a1a1a' }], dimensions: { width: 72, height: 20, depth: 16, unit: 'inches' }, weight: '35 kg', rating: 4.5, reviewCount: 28, badge: null, seed: 'tvunit1', inStock: true, stockCount: 15, isNew: false, isFeatured: true, isOnSale: true, tags: ['tv unit', 'entertainment', 'living room'], sku: 'WM-LR-TV-003' },
-  { id: 4, slug: 'artisan-floating-shelves', name: 'Artisan Floating Shelves Set', category: 'Living Room', subcategory: 'Shelves', shortDesc: 'Set of 3 solid oak floating shelves with hidden brackets.', description: '<p>Minimalist floating shelf set crafted from solid oak. Hidden bracket system creates a clean, floating appearance. Each shelf supports up to 15 kg. Perfect for displaying books, plants, and decor.</p>', price: 22000, originalPrice: 22000, material: 'Oak', colors: [{ name: 'Natural Oak', hex: '#c4a35a' }, { name: 'Dark Oak', hex: '#6b4423' }], dimensions: { width: 36, height: 2, depth: 8, unit: 'inches' }, weight: '8 kg', rating: 4.7, reviewCount: 19, badge: 'Top Rated', seed: 'shelf1', inStock: true, stockCount: 30, isNew: false, isFeatured: false, isOnSale: false, tags: ['shelves', 'storage', 'oak'], sku: 'WM-LR-SH-004' },
-  { id: 5, slug: 'comfort-lounge-chair', name: 'Comfort Lounge Chair', category: 'Living Room', subcategory: 'Sofas', shortDesc: 'Accent lounge chair with teak frame and premium fabric.', description: '<p>Elegant accent chair featuring a solid teak frame and plush cushioning. Ergonomic design supports extended reading sessions. Available in multiple fabric options to match your decor.</p>', price: 72000, originalPrice: 85000, material: 'Teak', colors: [{ name: 'Teak Natural', hex: '#a67c00' }, { name: 'Navy Blue', hex: '#1a2744' }], dimensions: { width: 32, height: 38, depth: 34, unit: 'inches' }, weight: '22 kg', rating: 4.4, reviewCount: 15, badge: 'Sale', seed: 'lounge1', inStock: true, stockCount: 8, isNew: true, isFeatured: false, isOnSale: true, tags: ['chair', 'accent', 'teak'], sku: 'WM-LR-CH-005' },
-  { id: 6, slug: 'corner-display-shelf', name: 'Corner Display Shelf', category: 'Living Room', subcategory: 'Shelves', shortDesc: 'Five-tier corner shelf unit in Sheesham wood.', description: '<p>Space-saving corner design maximizes unused room corners. Five open shelves for books, plants, and collectibles. Hand-finished Sheesham wood with natural grain patterns.</p>', price: 38000, originalPrice: 38000, material: 'Sheesham', colors: [{ name: 'Sheesham Natural', hex: '#6b3a2a' }], dimensions: { width: 24, height: 72, depth: 24, unit: 'inches' }, weight: '18 kg', rating: 4.3, reviewCount: 11, badge: null, seed: 'corner1', inStock: true, stockCount: 14, isNew: false, isFeatured: false, isOnSale: false, tags: ['shelf', 'corner', 'display'], sku: 'WM-LR-CS-006' },
-  { id: 7, slug: 'minimalist-media-console', name: 'Minimalist Media Console', category: 'Living Room', subcategory: 'TV Units', shortDesc: 'Low-profile media console with sliding doors.', description: '<p>Contemporary low-profile design with sliding barn doors concealing storage compartments. Solid pine construction with iron hardware accents. Fits TVs up to 55 inches.</p>', price: 55000, originalPrice: 62000, material: 'Pine', colors: [{ name: 'Whitewash Pine', hex: '#e8e0d0' }, { name: 'Rustic Brown', hex: '#5c4033' }], dimensions: { width: 60, height: 24, depth: 18, unit: 'inches' }, weight: '30 kg', rating: 4.5, reviewCount: 22, badge: null, seed: 'media1', inStock: true, stockCount: 10, isNew: true, isFeatured: false, isOnSale: true, tags: ['media console', 'tv', 'pine'], sku: 'WM-LR-MC-007' },
-  { id: 8, slug: 'nesting-coffee-tables', name: 'Nesting Coffee Tables', category: 'Living Room', subcategory: 'Coffee Tables', shortDesc: 'Set of 2 nesting tables in acacia wood.', description: '<p>Versatile nesting table set tucks neatly together when not in use. Acacia wood top with powder-coated steel legs. Ideal for small apartments and flexible entertaining.</p>', price: 32000, originalPrice: 32000, material: 'Acrylic', colors: [{ name: 'Acacia Natural', hex: '#b8860b' }], dimensions: { width: 40, height: 18, depth: 20, unit: 'inches' }, weight: '15 kg', rating: 4.2, reviewCount: 9, badge: 'New', seed: 'nesting1', inStock: true, stockCount: 18, isNew: true, isFeatured: false, isOnSale: false, tags: ['nesting tables', 'coffee table', 'compact'], sku: 'WM-LR-NT-008' },
-  { id: 9, slug: 'royal-teak-wardrobe', name: 'Royal Teak Wardrobe', category: 'Bedroom', subcategory: 'Wardrobes', shortDesc: 'Four-door wardrobe with mirror and internal organizers.', description: '<p>Spacious four-door wardrobe crafted from solid teak. Features full-length mirror, hanging rails, adjustable shelves, and velvet-lined jewelry drawer. Soft-close hinges throughout.</p>', price: 245000, originalPrice: 280000, material: 'Teak', colors: [{ name: 'Teak Honey', hex: '#c19a6b' }, { name: 'Dark Teak', hex: '#5c4033' }], dimensions: { width: 80, height: 84, depth: 24, unit: 'inches' }, weight: '120 kg', rating: 4.9, reviewCount: 38, badge: 'Bestseller', seed: 'wardrobe1', inStock: true, stockCount: 6, isNew: false, isFeatured: true, isOnSale: true, tags: ['wardrobe', 'bedroom', 'teak', 'storage'], sku: 'WM-BR-WD-009' },
-  { id: 10, slug: 'serenity-platform-bed', name: 'Serenity Platform Bed', category: 'Bedroom', subcategory: 'Beds', shortDesc: 'King-size platform bed with upholstered headboard.', description: '<p>Modern platform bed with button-tufted upholstered headboard. Solid Sheesham wood frame with center support beam. No box spring needed. Under-bed clearance for storage bins.</p>', price: 165000, originalPrice: 190000, material: 'Sheesham', colors: [{ name: 'Walnut', hex: '#5c3d2e' }, { name: 'Grey Fabric', hex: '#808080' }], dimensions: { width: 76, height: 48, depth: 84, unit: 'inches' }, weight: '85 kg', rating: 4.7, reviewCount: 42, badge: 'Sale', seed: 'bed1', inStock: true, stockCount: 8, isNew: false, isFeatured: true, isOnSale: true, tags: ['bed', 'king', 'platform', 'bedroom'], sku: 'WM-BR-BD-010' },
-  { id: 11, slug: 'classic-6-drawer-dresser', name: 'Classic 6-Drawer Dresser', category: 'Bedroom', subcategory: 'Dressers', shortDesc: 'Six-drawer dresser with soft-close dovetail drawers.', description: '<p>Timeless six-drawer dresser with hand-cut dovetail joints and soft-close drawer slides. Walnut veneer over engineered wood. Antique brass hardware adds elegant detail.</p>', price: 89000, originalPrice: 95000, material: 'Walnut', colors: [{ name: 'Walnut Brown', hex: '#5c3d2e' }], dimensions: { width: 60, height: 34, depth: 18, unit: 'inches' }, weight: '55 kg', rating: 4.6, reviewCount: 24, badge: null, seed: 'dresser1', inStock: true, stockCount: 11, isNew: false, isFeatured: false, isOnSale: true, tags: ['dresser', 'bedroom', 'storage'], sku: 'WM-BR-DR-011' },
-  { id: 12, slug: 'bedside-nightstand-pair', name: 'Bedside Nightstand Pair', category: 'Bedroom', subcategory: 'Nightstands', shortDesc: 'Set of 2 matching nightstands with USB charging port.', description: '<p>Matching pair of nightstands with drawer storage and open shelf. Built-in USB charging port and wireless charging pad on top surface. Solid oak construction.</p>', price: 42000, originalPrice: 48000, material: 'Oak', colors: [{ name: 'Natural Oak', hex: '#c4a35a' }, { name: 'White Wash', hex: '#f5f0e8' }], dimensions: { width: 20, height: 24, depth: 16, unit: 'inches' }, weight: '12 kg each', rating: 4.5, reviewCount: 31, badge: 'Top Rated', seed: 'nightstand1', inStock: true, stockCount: 16, isNew: false, isFeatured: false, isOnSale: true, tags: ['nightstand', 'bedroom', 'pair'], sku: 'WM-BR-NS-012' },
-  { id: 13, slug: 'queen-sleigh-bed', name: 'Queen Sleigh Bed', category: 'Bedroom', subcategory: 'Beds', shortDesc: 'Elegant queen sleigh bed in solid pine.', description: '<p>Classic sleigh bed design with curved headboard and footboard. Solid pine construction with rich stain finish. Includes wooden slat support system for mattress.</p>', price: 125000, originalPrice: 125000, material: 'Pine', colors: [{ name: 'Cherry Stain', hex: '#6b1c1c' }, { name: 'Espresso', hex: '#2c1810' }], dimensions: { width: 64, height: 52, depth: 86, unit: 'inches' }, weight: '70 kg', rating: 4.4, reviewCount: 18, badge: null, seed: 'sleigh1', inStock: true, stockCount: 7, isNew: false, isFeatured: false, isOnSale: false, tags: ['bed', 'queen', 'sleigh'], sku: 'WM-BR-SB-013' },
-  { id: 14, slug: 'sliding-door-wardrobe', name: 'Sliding Door Wardrobe', category: 'Bedroom', subcategory: 'Wardrobes', shortDesc: 'Two-door sliding wardrobe with mirrored panels.', description: '<p>Space-efficient sliding door wardrobe with full mirrored panels. Internal configuration includes double hanging rail, shelves, and shoe rack. MDF with premium laminate finish.</p>', price: 135000, originalPrice: 150000, material: 'MDF', colors: [{ name: 'White', hex: '#ffffff' }, { name: 'Grey Oak', hex: '#9e9e9e' }], dimensions: { width: 72, height: 80, depth: 22, unit: 'inches' }, weight: '90 kg', rating: 4.3, reviewCount: 20, badge: 'Sale', seed: 'sliding1', inStock: true, stockCount: 9, isNew: true, isFeatured: false, isOnSale: true, tags: ['wardrobe', 'sliding', 'mirror'], sku: 'WM-BR-SW-014' },
-  { id: 15, slug: 'vanity-dressing-table', name: 'Vanity Dressing Table', category: 'Bedroom', subcategory: 'Dressers', shortDesc: 'Vanity table with tri-fold mirror and stool.', description: '<p>Complete vanity set with tri-fold mirror, spacious drawer, and matching upholstered stool. Sheesham wood frame with velvet-lined top drawer for jewelry storage.</p>', price: 65000, originalPrice: 65000, material: 'Sheesham', colors: [{ name: 'Rosewood', hex: '#65000b' }, { name: 'Ivory', hex: '#fffff0' }], dimensions: { width: 42, height: 30, depth: 18, unit: 'inches' }, weight: '25 kg', rating: 4.6, reviewCount: 14, badge: 'New', seed: 'vanity1', inStock: true, stockCount: 12, isNew: true, isFeatured: false, isOnSale: false, tags: ['vanity', 'dressing table', 'bedroom'], sku: 'WM-BR-VT-015' },
-  { id: 16, slug: 'floating-nightstand', name: 'Floating Nightstand', category: 'Bedroom', subcategory: 'Nightstands', shortDesc: 'Wall-mounted floating nightstand with drawer.', description: '<p>Modern wall-mounted design frees floor space. Single drawer with push-to-open mechanism. Solid walnut construction with natural oil finish.</p>', price: 18000, originalPrice: 18000, material: 'Walnut', colors: [{ name: 'Walnut', hex: '#5c3d2e' }], dimensions: { width: 18, height: 12, depth: 14, unit: 'inches' }, weight: '5 kg', rating: 4.2, reviewCount: 8, badge: null, seed: 'floatns1', inStock: true, stockCount: 25, isNew: false, isFeatured: false, isOnSale: false, tags: ['nightstand', 'floating', 'wall mount'], sku: 'WM-BR-FN-016' },
-  { id: 17, slug: 'walnut-dining-table-set', name: 'Walnut Dining Table Set', category: 'Dining', subcategory: 'Tables', shortDesc: '6-seater dining table with matching chairs.', description: '<p>Elegant 6-seater dining set featuring a solid walnut table with butterfly leaf extension and six upholstered dining chairs. Seats 8 when extended. Hand-rubbed oil finish.</p>', price: 285000, originalPrice: 320000, material: 'Walnut', colors: [{ name: 'Walnut', hex: '#5c3d2e' }, { name: 'Cream Upholstery', hex: '#f5f5dc' }], dimensions: { width: 72, height: 30, depth: 40, unit: 'inches' }, weight: '110 kg', rating: 4.8, reviewCount: 35, badge: 'Bestseller', seed: 'dining1', inStock: true, stockCount: 5, isNew: false, isFeatured: true, isOnSale: true, tags: ['dining table', 'set', 'walnut'], sku: 'WM-DN-DT-017' },
-  { id: 18, slug: 'farmhouse-dining-chairs', name: 'Farmhouse Dining Chairs Set of 4', category: 'Dining', subcategory: 'Chairs', shortDesc: 'Set of 4 cross-back dining chairs in oak.', description: '<p>Classic farmhouse cross-back design in solid oak. Contoured seat for comfort during long dinners. Stackable for easy storage. Sold as set of 4.</p>', price: 72000, originalPrice: 80000, material: 'Oak', colors: [{ name: 'Natural Oak', hex: '#c4a35a' }, { name: 'Distressed White', hex: '#f0ebe0' }], dimensions: { width: 18, height: 38, depth: 20, unit: 'inches' }, weight: '8 kg each', rating: 4.5, reviewCount: 21, badge: 'Sale', seed: 'dchair1', inStock: true, stockCount: 10, isNew: false, isFeatured: false, isOnSale: true, tags: ['dining chairs', 'oak', 'farmhouse'], sku: 'WM-DN-DC-018' },
-  { id: 19, slug: 'glass-top-dining-table', name: 'Glass Top Dining Table', category: 'Dining', subcategory: 'Tables', shortDesc: 'Modern glass top dining table for 4.', description: '<p>Contemporary design with tempered glass top and solid Sheesham wood base. Seats 4 comfortably. Easy to clean surface ideal for daily family meals.</p>', price: 95000, originalPrice: 95000, material: 'Sheesham', colors: [{ name: 'Clear Glass / Sheesham', hex: '#6b3a2a' }], dimensions: { width: 55, height: 30, depth: 32, unit: 'inches' }, weight: '45 kg', rating: 4.4, reviewCount: 16, badge: null, seed: 'glassdt1', inStock: true, stockCount: 8, isNew: true, isFeatured: false, isOnSale: false, tags: ['dining table', 'glass', 'modern'], sku: 'WM-DN-GT-019' },
-  { id: 20, slug: 'buffet-sideboard-cabinet', name: 'Buffet Sideboard Cabinet', category: 'Dining', subcategory: 'Cabinets', shortDesc: 'Three-door buffet cabinet with wine rack.', description: '<p>Stunning buffet sideboard with three cabinet doors, three drawers, and built-in wine rack. Teak wood with hand-carved details. Perfect for dining room storage and display.</p>', price: 118000, originalPrice: 135000, material: 'Teak', colors: [{ name: 'Teak Natural', hex: '#a67c00' }], dimensions: { width: 60, height: 36, depth: 18, unit: 'inches' }, weight: '65 kg', rating: 4.7, reviewCount: 19, badge: null, seed: 'buffet1', inStock: true, stockCount: 6, isNew: false, isFeatured: false, isOnSale: true, tags: ['buffet', 'sideboard', 'cabinet'], sku: 'WM-DN-BF-020' },
-  { id: 21, slug: 'bar-stool-set', name: 'Bar Stool Set of 2', category: 'Dining', subcategory: 'Chairs', shortDesc: 'Counter-height bar stools with back support.', description: '<p>Stylish counter-height bar stools with padded seat and backrest. Solid iron frame with powder-coated finish. Footrest for comfort. Set of 2.</p>', price: 38000, originalPrice: 38000, material: 'Pine', colors: [{ name: 'Black Frame / Brown Seat', hex: '#1a1a1a' }], dimensions: { width: 16, height: 30, depth: 16, unit: 'inches' }, weight: '6 kg each', rating: 4.3, reviewCount: 12, badge: 'New', seed: 'barstool1', inStock: true, stockCount: 15, isNew: true, isFeatured: false, isOnSale: false, tags: ['bar stool', 'counter height'], sku: 'WM-DN-BS-021' },
-  { id: 22, slug: 'executive-oak-desk', name: 'Executive Oak Desk', category: 'Office', subcategory: 'Desks', shortDesc: 'Large executive desk with file drawers and cable management.', description: '<p>Professional executive desk with three file drawers, keyboard tray, and built-in cable management grommets. Solid oak top with steel leg frame. Ample workspace for dual monitors.</p>', price: 145000, originalPrice: 165000, material: 'Oak', colors: [{ name: 'Natural Oak', hex: '#c4a35a' }, { name: 'Espresso', hex: '#2c1810' }], dimensions: { width: 60, height: 30, depth: 30, unit: 'inches' }, weight: '55 kg', rating: 4.8, reviewCount: 29, badge: 'Bestseller', seed: 'desk1', inStock: true, stockCount: 7, isNew: false, isFeatured: true, isOnSale: true, tags: ['desk', 'office', 'executive', 'oak'], sku: 'WM-OF-DK-022' },
-  { id: 23, slug: 'ergonomic-office-chair', name: 'Ergonomic Office Chair', category: 'Office', subcategory: 'Chairs', shortDesc: 'High-back ergonomic chair with lumbar support.', description: '<p>Premium ergonomic office chair with adjustable lumbar support, armrests, and seat height. Breathable mesh back with padded seat. 360-degree swivel with smooth-rolling casters.</p>', price: 52000, originalPrice: 60000, material: 'Acrylic', colors: [{ name: 'Black', hex: '#1a1a1a' }, { name: 'Grey', hex: '#808080' }], dimensions: { width: 26, height: 48, depth: 26, unit: 'inches' }, weight: '18 kg', rating: 4.6, reviewCount: 44, badge: 'Top Rated', seed: 'officechair1', inStock: true, stockCount: 20, isNew: false, isFeatured: true, isOnSale: true, tags: ['office chair', 'ergonomic'], sku: 'WM-OF-CH-023' },
-  { id: 24, slug: 'classic-oak-bookshelf', name: 'Classic Oak Bookshelf', category: 'Office', subcategory: 'Bookshelves', shortDesc: 'Five-tier open bookshelf in solid oak.', description: '<p>Sturdy five-tier bookshelf with adjustable shelf heights. Solid oak construction supports heavy books and decor. Anti-tip wall anchor included for safety.</p>', price: 48000, originalPrice: 48000, material: 'Oak', colors: [{ name: 'Natural Oak', hex: '#c4a35a' }], dimensions: { width: 36, height: 72, depth: 12, unit: 'inches' }, weight: '32 kg', rating: 4.5, reviewCount: 17, badge: null, seed: 'bookshelf1', inStock: true, stockCount: 13, isNew: false, isFeatured: false, isOnSale: false, tags: ['bookshelf', 'office', 'oak'], sku: 'WM-OF-BS-024' },
-  { id: 25, slug: '2-drawer-filing-cabinet', name: '2-Drawer Filing Cabinet', category: 'Office', subcategory: 'Filing Cabinets', shortDesc: 'Lockable 2-drawer filing cabinet with wheels.', description: '<p>Commercial-grade filing cabinet with two full-extension drawers fitting letter and legal files. Central lock secures both drawers. Rolling casters with locking mechanism.</p>', price: 35000, originalPrice: 40000, material: 'MDF', colors: [{ name: 'Matte Black', hex: '#1a1a1a' }, { name: 'White', hex: '#ffffff' }], dimensions: { width: 18, height: 28, depth: 22, unit: 'inches' }, weight: '25 kg', rating: 4.3, reviewCount: 13, badge: 'Sale', seed: 'filing1', inStock: true, stockCount: 11, isNew: false, isFeatured: false, isOnSale: true, tags: ['filing cabinet', 'office', 'storage'], sku: 'WM-OF-FC-025' },
-  { id: 26, slug: 'standing-desk-converter', name: 'Standing Desk Converter', category: 'Office', subcategory: 'Desks', shortDesc: 'Adjustable standing desk converter for dual monitors.', description: '<p>Transform any desk into a standing workstation. Gas-spring lift mechanism adjusts from 6 to 19 inches. Holds dual monitors up to 27 inches. Spacious keyboard tray included.</p>', price: 42000, originalPrice: 42000, material: 'MDF', colors: [{ name: 'Black', hex: '#1a1a1a' }], dimensions: { width: 36, height: 19, depth: 24, unit: 'inches' }, weight: '15 kg', rating: 4.4, reviewCount: 26, badge: 'New', seed: 'standing1', inStock: true, stockCount: 14, isNew: true, isFeatured: false, isOnSale: false, tags: ['standing desk', 'converter', 'ergonomic'], sku: 'WM-OF-SD-026' },
-  { id: 27, slug: 'teak-outdoor-dining-set', name: 'Teak Outdoor Dining Set', category: 'Outdoor', subcategory: 'Tables', shortDesc: 'Outdoor dining set with table and 4 chairs.', description: '<p>Weather-resistant grade-A teak outdoor dining set. Table with umbrella hole and four stackable chairs. Natural teak oil finish protects against UV and moisture. Perfect for patios and terraces.</p>', price: 175000, originalPrice: 195000, material: 'Teak', colors: [{ name: 'Natural Teak', hex: '#a67c00' }], dimensions: { width: 60, height: 30, depth: 36, unit: 'inches' }, weight: '75 kg', rating: 4.7, reviewCount: 23, badge: 'Sale', seed: 'outdoor1', inStock: true, stockCount: 4, isNew: false, isFeatured: true, isOnSale: true, tags: ['outdoor', 'dining set', 'teak', 'patio'], sku: 'WM-OD-DS-027' },
-  { id: 28, slug: 'adirondack-outdoor-chair', name: 'Adirondack Outdoor Chair', category: 'Outdoor', subcategory: 'Chairs', shortDesc: 'Classic Adirondack chair in weather-resistant acacia.', description: '<p>Iconic Adirondack design in sustainably sourced acacia wood. Wide armrests, contoured seat, and reclined back for ultimate relaxation. Pre-treated for outdoor use.</p>', price: 28000, originalPrice: 28000, material: 'Acrylic', colors: [{ name: 'Natural Wood', hex: '#b8860b' }, { name: 'White Wash', hex: '#f5f0e8' }], dimensions: { width: 30, height: 36, depth: 34, unit: 'inches' }, weight: '12 kg', rating: 4.5, reviewCount: 16, badge: null, seed: 'adirondack1', inStock: true, stockCount: 12, isNew: false, isFeatured: false, isOnSale: false, tags: ['outdoor chair', 'adirondack', 'patio'], sku: 'WM-OD-AC-028' },
-  { id: 29, slug: 'adventure-kids-bunk-bed', name: 'Adventure Kids Bunk Bed', category: 'Kids', subcategory: 'Beds', shortDesc: 'Twin bunk bed with safety rails and storage drawers.', description: '<p>Sturdy twin bunk bed with full safety rails, integrated ladder, and two under-bed storage drawers. Solid pine construction with non-toxic finish. Converts to two single beds.</p>', price: 98000, originalPrice: 110000, material: 'Pine', colors: [{ name: 'Natural Pine', hex: '#d4a574' }, { name: 'White', hex: '#ffffff' }], dimensions: { width: 42, height: 65, depth: 80, unit: 'inches' }, weight: '60 kg', rating: 4.8, reviewCount: 33, badge: 'Bestseller', seed: 'bunk1', inStock: true, stockCount: 6, isNew: false, isFeatured: true, isOnSale: true, tags: ['bunk bed', 'kids', 'twin'], sku: 'WM-KD-BB-029' },
-  { id: 30, slug: 'kids-study-desk-set', name: 'Kids Study Desk Set', category: 'Kids', subcategory: 'Study Desks', shortDesc: 'Adjustable height study desk with bookshelf and chair.', description: '<p>Ergonomic study desk set with height-adjustable desktop, built-in bookshelf, and matching chair. Tilting desktop for reading and writing. Cable hole for lamp and devices.</p>', price: 45000, originalPrice: 45000, material: 'MDF', colors: [{ name: 'Blue', hex: '#4169e1' }, { name: 'Pink', hex: '#ffb6c1' }, { name: 'White', hex: '#ffffff' }], dimensions: { width: 40, height: 30, depth: 24, unit: 'inches' }, weight: '22 kg', rating: 4.6, reviewCount: 27, badge: 'Top Rated', seed: 'studydesk1', inStock: true, stockCount: 15, isNew: true, isFeatured: false, isOnSale: false, tags: ['study desk', 'kids', 'adjustable'], sku: 'WM-KD-SD-030' },
-  { id: 31, slug: 'toy-storage-organizer', name: 'Toy Storage Organizer', category: 'Kids', subcategory: 'Toy Storage', shortDesc: '12-bin toy organizer with labeled compartments.', description: '<p>Colorful 12-bin toy storage unit keeps playrooms organized. Removable fabric bins in assorted colors. Sturdy MDF frame with rounded corners for safety. Easy assembly.</p>', price: 22000, originalPrice: 25000, material: 'MDF', colors: [{ name: 'Multi-Color Bins', hex: '#ff6b6b' }], dimensions: { width: 36, height: 36, depth: 12, unit: 'inches' }, weight: '10 kg', rating: 4.4, reviewCount: 19, badge: 'Sale', seed: 'toystorage1', inStock: true, stockCount: 22, isNew: false, isFeatured: false, isOnSale: true, tags: ['toy storage', 'kids', 'organizer'], sku: 'WM-KD-TS-031' },
-  { id: 32, slug: 'kids-single-bed', name: 'Kids Single Bed with Storage', category: 'Kids', subcategory: 'Beds', shortDesc: 'Single bed with pull-out trundle and headboard shelf.', description: '<p>Space-saving single bed with pull-out trundle for sleepovers. Built-in headboard shelf for books and nightlight. Solid Sheesham wood with playful yet timeless design.</p>', price: 68000, originalPrice: 68000, material: 'Sheesham', colors: [{ name: 'Natural Wood', hex: '#6b3a2a' }, { name: 'White Wash', hex: '#f5f0e8' }], dimensions: { width: 40, height: 40, depth: 78, unit: 'inches' }, weight: '40 kg', rating: 4.5, reviewCount: 11, badge: 'New', seed: 'kidsbed1', inStock: true, stockCount: 9, isNew: true, isFeatured: false, isOnSale: false, tags: ['kids bed', 'single', 'trundle'], sku: 'WM-KD-BD-032' },
+    { name: 'Royal Sheesham King Bed', material: 'Sheesham', color: 'Walnut Brown', price: 65000, originalPrice: 76700, badge: 'Bestseller', desc: 'Handcrafted king-size platform bed in solid Sheesham wood with upholstered headboard and under-bed storage.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Heritage Platform Bed', material: 'Teak', color: 'Natural Teak', price: 72300, originalPrice: 72300, badge: 'Sale', desc: 'Modern platform bed with button-tufted upholstered headboard, center support beam and storage drawers.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Classic Sleigh Bed', material: 'Walnut', color: 'Espresso', price: 79600, originalPrice: 79600, badge: 'New', desc: 'Elegant queen sleigh bed with curved headboard and footboard, hand-rubbed cherry finish.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Executive Storage Bed', material: 'Pine', color: 'Honey Oak', price: 86900, originalPrice: 102542, badge: 'Top Rated', desc: 'King-size bed with four spacious storage drawers, soft-close runners and brass hardware.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Modern Low-Profile Bed', material: 'Oak', color: 'Dark Walnut', price: 94200, originalPrice: 94200, badge: null, desc: 'Sleek low-profile platform bed with floating appearance, hidden LED ambient lighting.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Vintage Four-Poster Bed', material: 'Mahogany', color: 'Mahogany', price: 101500, originalPrice: 101500, badge: null, desc: 'Statement four-poster bed crafted from grade-A teak, hand-carved columns and ornate crown.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Industrial Metal-Wood Bed', material: 'MDF', color: 'Charcoal Grey', price: 108800, originalPrice: 128384, badge: 'Bestseller', desc: 'Industrial-style bed with solid pine planks and powder-coated steel frame.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Carved Headboard Bed', material: 'Pine & Steel', color: 'Cream', price: 116100, originalPrice: 116100, badge: 'New', desc: 'Hand-carved headboard with traditional Pakistani motifs, premium mahogany finish.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Linen Upholstered Bed', material: 'Mahogany', color: 'White Wash', price: 123400, originalPrice: 123400, badge: 'Sale', desc: 'Soft linen-upholstered bed with tufted headboard, hardwood internal frame.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Rustic Farmhouse Bed', material: 'Reclaimed Pine', color: 'Rustic Brown', price: 130700, originalPrice: 154226, badge: null, desc: 'Rustic farmhouse-style bed crafted from reclaimed pine with visible wood grain.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Velvet Tufted Bed', material: 'Pine & Linen', color: 'Antique White', price: 138000, originalPrice: 138000, badge: 'Bestseller', desc: 'Luxury velvet-tufted headboard bed with deep button detail and gold metal legs.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Compact Single Bed', material: 'Sheesham', color: 'Walnut Brown', price: 145300, originalPrice: 145300, badge: 'Sale', desc: 'Space-saving single bed ideal for small bedrooms, pull-out trundle option available.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Mirror-Panel Headboard Bed', material: 'Teak', color: 'Natural Teak', price: 152600, originalPrice: 180068, badge: 'New', desc: 'Modern bed with built-in mirror panels on headboard, soft-close drawers underneath.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Bunk Bed with Storage', material: 'Walnut', color: 'Espresso', price: 159900, originalPrice: 159900, badge: 'Top Rated', desc: 'Twin bunk bed with safety rails, integrated ladder and two under-bed storage drawers.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Trundle Day Bed', material: 'Pine', color: 'Honey Oak', price: 167200, originalPrice: 167200, badge: null, desc: 'Versatile day bed with pull-out trundle, perfect for guest rooms and sleepovers.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Mid-Century Modern Bed', material: 'Oak', color: 'Dark Walnut', price: 174500, originalPrice: 205910, badge: null, desc: 'Mid-century inspired bed with tapered legs, clean lines and walnut veneer.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Cane Headboard Bed', material: 'Mahogany', color: 'Mahogany', price: 181800, originalPrice: 181800, badge: 'Bestseller', desc: 'Hand-woven cane headboard with solid teak frame, classic colonial charm.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Storage Headboard Bed', material: 'MDF', color: 'Charcoal Grey', price: 189100, originalPrice: 189100, badge: 'New', desc: 'Smart bed with built-in shelving and cubbies in the headboard for books and lamps.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Art Deco Bed Frame', material: 'Pine & Steel', color: 'Cream', price: 196400, originalPrice: 231752, badge: 'Sale', desc: 'Art deco style bed with geometric headboard pattern, gold leaf accents.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Scandinavian Minimalist Bed', material: 'Mahogany', color: 'White Wash', price: 203700, originalPrice: 203700, badge: null, desc: 'Scandinavian-style bed in light oak with clean lines, slatted base, easy assembly.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Heavy-Duty Storage Bed', material: 'Reclaimed Pine', color: 'Rustic Brown', price: 211000, originalPrice: 211000, badge: 'Bestseller', desc: 'Extra-large storage bed with 6 drawers and hydraulic lift mechanism.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Wrought Iron Wood Bed', material: 'Pine & Linen', color: 'Antique White', price: 218300, originalPrice: 257594, badge: 'Sale', desc: 'Hand-forged wrought iron bed with solid pine slats, vintage Victorian style.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Bookshelf Headboard Bed', material: 'Sheesham', color: 'Walnut Brown', price: 225600, originalPrice: 225600, badge: 'New', desc: 'Bookshelf headboard with adjustable shelves and integrated reading lights.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'King Poster Bed', material: 'Teak', color: 'Natural Teak', price: 232900, originalPrice: 232900, badge: 'Top Rated', desc: 'Grand king poster bed in solid teak, traditional craftsmanship for master bedrooms.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Captain Storage Bed', material: 'Walnut', color: 'Espresso', price: 240200, originalPrice: 283436, badge: null, desc: 'Captain bed with 6 built-in storage drawers, perfect for kids and teens.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Modern Wingback Bed', material: 'Pine', color: 'Honey Oak', price: 247500, originalPrice: 247500, badge: null, desc: 'Tall wingback headboard in charcoal linen, solid wood frame, statement piece.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Classic Mahogany Bed', material: 'Oak', color: 'Dark Walnut', price: 254800, originalPrice: 254800, badge: 'Bestseller', desc: 'Hand-finished mahogany bed with traditional turned posts, premium quality.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Studio Apartment Bed', material: 'Mahogany', color: 'Mahogany', price: 262100, originalPrice: 309278, badge: 'New', desc: 'Compact studio bed with hidden storage and fold-down desk, perfect for small spaces.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Round Designer Bed', material: 'MDF', color: 'Charcoal Grey', price: 269400, originalPrice: 269400, badge: 'Sale', desc: 'Designer round bed with circular headboard, LED ambient lighting, premium upholstery.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Cottage Style Bed', material: 'Pine & Steel', color: 'Cream', price: 276700, originalPrice: 276700, badge: null, desc: 'Cottage-style bed in distressed white finish with turned posts and decorative finials.', category: 'Bedroom', subcategory: 'Beds & Bed Frames', subcategorySlug: 'beds' },
+    { name: 'Mirrored Dresser Set', material: 'Mahogany', color: 'White Wash', price: 284000, originalPrice: 335120, badge: 'Bestseller', desc: 'Six-drawer dresser with matching mirror, hand-cut dovetail joints and soft-close slides.', category: 'Bedroom', subcategory: 'Dressers & Mirrors', subcategorySlug: 'dressers' },
+    { name: 'Classic Vanity Dresser', material: 'Reclaimed Pine', color: 'Rustic Brown', price: 291300, originalPrice: 291300, badge: 'Sale', desc: 'Traditional vanity dresser with tri-fold mirror and velvet-lined jewelry drawer.', category: 'Bedroom', subcategory: 'Dressers & Mirrors', subcategorySlug: 'dressers' },
+    { name: 'Modern 6-Drawer Dresser', material: 'Pine & Linen', color: 'Antique White', price: 298600, originalPrice: 298600, badge: 'New', desc: 'Sleek modern dresser with 6 spacious drawers, push-to-open mechanism and steel legs.', category: 'Bedroom', subcategory: 'Dressers & Mirrors', subcategorySlug: 'dressers' },
+    { name: 'Tallboy Dresser', material: 'Sheesham', color: 'Walnut Brown', price: 305900, originalPrice: 360962, badge: 'Top Rated', desc: 'Tall vertical dresser with 5 large drawers, perfect for small bedrooms.', category: 'Bedroom', subcategory: 'Dressers & Mirrors', subcategorySlug: 'dressers' },
+    { name: 'Wide Dresser with Mirror', material: 'Teak', color: 'Natural Teak', price: 313200, originalPrice: 313200, badge: null, desc: 'Wide 8-drawer dresser with matching mirror, brass hardware throughout.', category: 'Bedroom', subcategory: 'Dressers & Mirrors', subcategorySlug: 'dressers' },
+    { name: 'Vintage Dresser', material: 'Walnut', color: 'Espresso', price: 320500, originalPrice: 320500, badge: null, desc: 'Vintage-inspired dresser with hand-painted finish, hand-forged metal pulls.', category: 'Bedroom', subcategory: 'Dressers & Mirrors', subcategorySlug: 'dressers' },
+    { name: 'Sheesham Chest of Drawers', material: 'Pine', color: 'Honey Oak', price: 327800, originalPrice: 386804, badge: 'Bestseller', desc: 'Solid Sheesham chest with 4 deep drawers, mortise-and-tenon joinery.', category: 'Bedroom', subcategory: 'Dressers & Mirrors', subcategorySlug: 'dressers' },
+    { name: 'Industrial Dresser', material: 'Oak', color: 'Dark Walnut', price: 335100, originalPrice: 335100, badge: 'New', desc: 'Industrial-style dresser with metal corner brackets and riveted hardware.', category: 'Bedroom', subcategory: 'Dressers & Mirrors', subcategorySlug: 'dressers' },
+    { name: 'White Wash Dresser', material: 'Mahogany', color: 'Mahogany', price: 342400, originalPrice: 342400, badge: 'Sale', desc: 'Light white-wash dresser with 6 drawers, distressed finish for coastal charm.', category: 'Bedroom', subcategory: 'Dressers & Mirrors', subcategorySlug: 'dressers' },
+    { name: 'Antique Washstand', material: 'MDF', color: 'Charcoal Grey', price: 349700, originalPrice: 412646, badge: null, desc: 'Antique-style washstand with marble top and towel rails.', category: 'Bedroom', subcategory: 'Dressers & Mirrors', subcategorySlug: 'dressers' },
+    { name: 'Mid-Century Dresser', material: 'Pine & Steel', color: 'Cream', price: 357000, originalPrice: 357000, badge: 'Bestseller', desc: 'Mid-century modern dresser with splayed legs, 4 drawers, walnut veneer.', category: 'Bedroom', subcategory: 'Dressers & Mirrors', subcategorySlug: 'dressers' },
+    { name: 'Rattan Front Dresser', material: 'Mahogany', color: 'White Wash', price: 364300, originalPrice: 364300, badge: 'Sale', desc: 'Dresser with hand-woven rattan drawer fronts, solid oak frame.', category: 'Bedroom', subcategory: 'Dressers & Mirrors', subcategorySlug: 'dressers' },
+    { name: 'Bedside Table Pair', material: 'Reclaimed Pine', color: 'Rustic Brown', price: 371600, originalPrice: 438488, badge: 'New', desc: 'Matching pair of nightstands with drawer and open shelf, USB charging port.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Modern Nightstand', material: 'Pine & Linen', color: 'Antique White', price: 378900, originalPrice: 378900, badge: 'Top Rated', desc: 'Sleek modern nightstand with 2 drawers, push-to-open mechanism and cable management.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Floating Nightstand', material: 'Sheesham', color: 'Walnut Brown', price: 386200, originalPrice: 386200, badge: null, desc: 'Wall-mounted floating nightstand with single drawer, modern minimalist design.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Vintage Nightstand Pair', material: 'Teak', color: 'Natural Teak', price: 393500, originalPrice: 464330, badge: null, desc: 'Vintage-style pair of nightstands with turned legs and ceramic drawer pulls.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Charging Nightstand', material: 'Walnut', color: 'Espresso', price: 400800, originalPrice: 400800, badge: 'Bestseller', desc: 'Nightstand with built-in wireless charging pad and USB-C port.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Marble Top Nightstand', material: 'Pine', color: 'Honey Oak', price: 408100, originalPrice: 408100, badge: 'New', desc: 'Luxury nightstand with genuine marble top, gold metal legs and 2 drawers.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Rattan Nightstand', material: 'Oak', color: 'Dark Walnut', price: 415400, originalPrice: 490172, badge: 'Sale', desc: 'Nightstand with hand-woven rattan drawer front, solid oak frame.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Industrial Side Table', material: 'Mahogany', color: 'Mahogany', price: 422700, originalPrice: 422700, badge: null, desc: 'Industrial-style side table with steel frame and solid wood top, single drawer.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Three-Drawer Nightstand', material: 'MDF', color: 'Charcoal Grey', price: 430000, originalPrice: 430000, badge: 'Bestseller', desc: 'Tall nightstand with 3 drawers, perfect for extra bedroom storage.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Compact Side Table', material: 'Pine & Steel', color: 'Cream', price: 437300, originalPrice: 516014, badge: 'Sale', desc: 'Compact bedside table ideal for small spaces, single drawer with shelf.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Designer Bedside', material: 'Mahogany', color: 'White Wash', price: 444600, originalPrice: 444600, badge: 'New', desc: 'Designer bedside table with hand-carved details, premium mahogany finish.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Minimalist Side Table', material: 'Reclaimed Pine', color: 'Rustic Brown', price: 451900, originalPrice: 451900, badge: 'Top Rated', desc: 'Minimalist nightstand with single drawer, clean lines and tapered legs.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Storage Ottoman', material: 'Pine & Linen', color: 'Antique White', price: 459200, originalPrice: 541856, badge: null, desc: 'Multi-functional ottoman side table with hidden storage and cushioned top.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Two-Tier Side Table', material: 'Sheesham', color: 'Walnut Brown', price: 466500, originalPrice: 466500, badge: null, desc: 'Two-tier side table with lower shelf, perfect for books and magazines.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'C-Shaped Side Table', material: 'Teak', color: 'Natural Teak', price: 473800, originalPrice: 473800, badge: 'Bestseller', desc: 'C-shaped side table slides under bed for laptop use, modern design.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Heritage Nightstand', material: 'Walnut', color: 'Espresso', price: 481100, originalPrice: 567698, badge: 'New', desc: 'Heritage nightstand in solid teak with hand-carved details and brass pulls.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Round Side Table', material: 'Pine', color: 'Honey Oak', price: 488400, originalPrice: 488400, badge: 'Sale', desc: 'Round side table with turned pedestal base, single drawer.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+    { name: 'Open Shelf Nightstand', material: 'Oak', color: 'Dark Walnut', price: 495700, originalPrice: 495700, badge: null, desc: 'Modern open-shelf nightstand with cable management and clean lines.', category: 'Bedroom', subcategory: 'Side Tables & Nightstands', subcategorySlug: 'side-tables' },
+
+    { name: 'Heritage Sheesham Sofa', material: 'Sheesham', color: 'Walnut Brown', price: 45000, originalPrice: 51749, badge: 'Bestseller', desc: 'Three-seater solid Sheesham sofa with premium upholstery, traditional joinery, high-density foam cushions.', category: 'Sofas', subcategory: 'Three-Seater Sofas', subcategorySlug: 'three-seater' },
+    { name: 'Modern L-Shape Sectional', material: 'Teak', color: 'Charcoal Grey', price: 51500, originalPrice: 51500, badge: 'Sale', desc: 'L-shaped sectional sofa with reversible chaise, performance fabric upholstery, deep seating.', category: 'Sofas', subcategory: 'L-Shaped Sofas', subcategorySlug: 'l-shaped' },
+    { name: 'Luxury Chesterfield', material: 'Walnut', color: 'Cream', price: 58000, originalPrice: 58000, badge: 'New', desc: 'Classic Chesterfield with deep button tufting, rolled arms, nailhead trim and premium leather.', category: 'Sofas', subcategory: 'Sofa Sets', subcategorySlug: 'sofa-sets' },
+    { name: 'Classic Three-Seater', material: 'Pine', color: 'Navy Blue', price: 64500, originalPrice: 64500, badge: 'Top Rated', desc: 'Timeless three-seater sofa with rolled arms, premium down-blend cushions, hardwood frame.', category: 'Sofas', subcategory: 'Three-Seater Sofas', subcategorySlug: 'three-seater' },
+    { name: 'Velvet L-Shape Sofa', material: 'Oak', color: 'Beige', price: 71000, originalPrice: 81650, badge: null, desc: 'Plush velvet L-shape sofa with gold metal legs, deep seating for ultimate comfort.', category: 'Sofas', subcategory: 'L-Shaped Sofas', subcategorySlug: 'l-shaped' },
+    { name: 'Comfort Recliner Set', material: 'Mahogany', color: 'Forest Green', price: 77500, originalPrice: 77500, badge: 'Bestseller', desc: 'Three-piece recliner set with power headrests, USB charging ports, console storage.', category: 'Sofas', subcategory: 'Sofa Sets', subcategorySlug: 'sofa-sets' },
+    { name: 'Royal Velvet Sofa', material: 'Pine & Steel', color: 'Burgundy', price: 84000, originalPrice: 84000, badge: 'Bestseller', desc: 'Royal velvet sofa with tufted back, hand-carved Sheesham frame, gold metal accents.', category: 'Sofas', subcategory: 'Three-Seater Sofas', subcategorySlug: 'three-seater' },
+    { name: 'Leather Reclining Sofa', material: 'Pine & Linen', color: 'Black', price: 90500, originalPrice: 90500, badge: 'Sale', desc: 'Top-grain leather reclining sofa with power recline, adjustable headrest, lumbar support.', category: 'Sofas', subcategory: 'L-Shaped Sofas', subcategorySlug: 'l-shaped' },
+    { name: 'Linen Upholstered Sofa', material: 'Pine & Velvet', color: 'Grey', price: 97000, originalPrice: 111549, badge: 'New', desc: 'Belgian linen-upholstered sofa with down-wrapped cushions, solid pine frame, machine-washable covers.', category: 'Sofas', subcategory: 'Sofa Sets', subcategorySlug: 'sofa-sets' },
+    { name: 'Mid-Century Sofa', material: 'Pine & Leather', color: 'Tan', price: 103500, originalPrice: 103500, badge: 'Top Rated', desc: 'Mid-century modern sofa with walnut sled base, premium wool upholstery, tapered legs.', category: 'Sofas', subcategory: 'Three-Seater Sofas', subcategorySlug: 'three-seater' },
+    { name: 'Italian Leather Sofa', material: 'Walnut & Wool', color: 'Mustard', price: 110000, originalPrice: 110000, badge: null, desc: 'Top-grain Italian leather sofa with hand-stitched details, solid wood legs, 8-way hand-tied springs.', category: 'Sofas', subcategory: 'L-Shaped Sofas', subcategorySlug: 'l-shaped' },
+    { name: 'Modular Sectional', material: 'Sheesham', color: 'Cognac', price: 116500, originalPrice: 116500, badge: 'Bestseller', desc: 'Modular sectional with 5 configurable pieces, machine-washable covers, family-sized seating.', category: 'Sofas', subcategory: 'Sofa Sets', subcategorySlug: 'sofa-sets' },
+    { name: 'Traditional Carved Sofa', material: 'Teak', color: 'Brown', price: 123000, originalPrice: 141450, badge: 'Bestseller', desc: 'Traditional carved sofa with hand-carved Sheesham frame, premium fabric, ornate details.', category: 'Sofas', subcategory: 'Three-Seater Sofas', subcategorySlug: 'three-seater' },
+    { name: 'Contemporary Sofa Set', material: 'Walnut', color: 'Emerald Green', price: 129500, originalPrice: 129500, badge: 'Sale', desc: 'Contemporary sofa set with matching loveseat and chair, stain-resistant fabric, hardwood frame.', category: 'Sofas', subcategory: 'L-Shaped Sofas', subcategorySlug: 'l-shaped' },
+    { name: 'Corner Sofa Bed', material: 'Pine', color: 'Red Mahogany', price: 136000, originalPrice: 136000, badge: 'New', desc: 'Corner sofa bed with pull-out mattress, hidden storage, perfect for studio apartments.', category: 'Sofas', subcategory: 'Sofa Sets', subcategorySlug: 'sofa-sets' },
+    { name: 'Tufted Back Sofa', material: 'Oak', color: 'Walnut Brown', price: 142500, originalPrice: 142500, badge: 'Top Rated', desc: 'Tufted back sofa with deep button detail, rolled arms, premium velvet upholstery.', category: 'Sofas', subcategory: 'Three-Seater Sofas', subcategorySlug: 'three-seater' },
+    { name: 'Scandinavian Sofa', material: 'Mahogany', color: 'Charcoal Grey', price: 149000, originalPrice: 171350, badge: null, desc: 'Scandinavian sofa with clean lines, oak legs, premium woven fabric, removable cushions.', category: 'Sofas', subcategory: 'L-Shaped Sofas', subcategorySlug: 'l-shaped' },
+    { name: 'Family Size Sectional', material: 'Pine & Steel', color: 'Cream', price: 155500, originalPrice: 155500, badge: 'Bestseller', desc: 'Family-sized sectional with 6 seats, reversible chaise, performance fabric, stain-resistant.', category: 'Sofas', subcategory: 'Sofa Sets', subcategorySlug: 'sofa-sets' },
+    { name: 'Lounge Sofa', material: 'Pine & Linen', color: 'Navy Blue', price: 162000, originalPrice: 162000, badge: 'Bestseller', desc: 'Lounge sofa with extra-deep seating, plush cushions, perfect for movie nights.', category: 'Sofas', subcategory: 'Three-Seater Sofas', subcategorySlug: 'three-seater' },
+    { name: 'Designer Curved Sofa', material: 'Pine & Velvet', color: 'Beige', price: 168500, originalPrice: 168500, badge: 'Sale', desc: 'Designer curved sofa with unique silhouette, premium velvet, gold metal base, statement piece.', category: 'Sofas', subcategory: 'L-Shaped Sofas', subcategorySlug: 'l-shaped' },
+    { name: 'Compact Apartment Sofa', material: 'Pine & Leather', color: 'Forest Green', price: 175000, originalPrice: 201249, badge: 'New', desc: 'Compact apartment sofa with slim profile, perfect for small spaces, modern design.', category: 'Sofas', subcategory: 'Sofa Sets', subcategorySlug: 'sofa-sets' },
+    { name: 'Reclining Theater Sofa', material: 'Walnut & Wool', color: 'Burgundy', price: 181500, originalPrice: 181500, badge: 'Top Rated', desc: 'Reclining theater sofa with cup holders, USB ports, LED lighting, premium leather.', category: 'Sofas', subcategory: 'Three-Seater Sofas', subcategorySlug: 'three-seater' },
+    { name: 'Classic Rolled Arm Sofa', material: 'Sheesham', color: 'Black', price: 188000, originalPrice: 188000, badge: null, desc: 'Classic rolled-arm sofa with nailhead trim, premium linen, hardwood frame, 8-way hand-tied.', category: 'Sofas', subcategory: 'L-Shaped Sofas', subcategorySlug: 'l-shaped' },
+    { name: 'Modern Track Arm Sofa', material: 'Teak', color: 'Grey', price: 194500, originalPrice: 194500, badge: 'Bestseller', desc: 'Modern track-arm sofa with clean lines, performance fabric, deep seating, hardwood frame.', category: 'Sofas', subcategory: 'Sofa Sets', subcategorySlug: 'sofa-sets' },
+    { name: 'Convertible Sofa Bed', material: 'Walnut', color: 'Tan', price: 201000, originalPrice: 231149, badge: 'Bestseller', desc: 'Convertible sofa bed with easy-pull mechanism, memory foam mattress, perfect for guests.', category: 'Sofas', subcategory: 'Three-Seater Sofas', subcategorySlug: 'three-seater' },
+    { name: 'Modular Corner Sofa', material: 'Pine', color: 'Mustard', price: 207500, originalPrice: 207500, badge: 'Sale', desc: 'Modular corner sofa with configurable layout, premium fabric, machine-washable covers.', category: 'Sofas', subcategory: 'L-Shaped Sofas', subcategorySlug: 'l-shaped' },
+    { name: 'Vintage Inspired Sofa', material: 'Oak', color: 'Cognac', price: 214000, originalPrice: 214000, badge: 'New', desc: 'Vintage-inspired sofa with tufted back, turned wooden legs, premium velvet, classic charm.', category: 'Sofas', subcategory: 'Sofa Sets', subcategorySlug: 'sofa-sets' },
+    { name: 'Lounge Chair Accent', material: 'Mahogany', color: 'Brown', price: 220500, originalPrice: 220500, badge: 'Top Rated', desc: 'Lounge accent chair with deep seat, premium fabric, solid wood frame, modern silhouette.', category: 'Coffee Chairs', subcategory: 'Lounge Chairs', subcategorySlug: 'lounge' },
+    { name: 'Reading Lounge Chair', material: 'Pine & Steel', color: 'Emerald Green', price: 227000, originalPrice: 261049, badge: null, desc: 'Reading lounge chair with high back, plush cushions, perfect for libraries and studies.', category: 'Coffee Chairs', subcategory: 'Accent Chairs', subcategorySlug: 'accent' },
+    { name: 'Swivel Lounge Chair', material: 'Pine & Linen', color: 'Red Mahogany', price: 233500, originalPrice: 233500, badge: 'Bestseller', desc: 'Swivel lounge chair with 360-degree rotation, premium upholstery, solid wood base.', category: 'Coffee Chairs', subcategory: 'Recliners', subcategorySlug: 'recliners' },
+    { name: 'Velvet Accent Chair', material: 'Pine & Velvet', color: 'Walnut Brown', price: 240000, originalPrice: 240000, badge: 'Bestseller', desc: 'Velvet accent chair with channel tufting, gold metal legs, statement piece for any room.', category: 'Coffee Chairs', subcategory: 'Lounge Chairs', subcategorySlug: 'lounge' },
+    { name: 'Rattan Accent Chair', material: 'Pine & Leather', color: 'Charcoal Grey', price: 246500, originalPrice: 246500, badge: 'Sale', desc: 'Rattan accent chair with hand-woven rattan back, solid wood frame, bohemian charm.', category: 'Coffee Chairs', subcategory: 'Accent Chairs', subcategorySlug: 'accent' },
+    { name: 'Modern Accent Chair', material: 'Walnut & Wool', color: 'Cream', price: 253000, originalPrice: 290950, badge: 'New', desc: 'Modern accent chair with clean lines, premium fabric, solid wood legs, versatile design.', category: 'Coffee Chairs', subcategory: 'Recliners', subcategorySlug: 'recliners' },
+    { name: 'Wingback Accent Chair', material: 'Sheesham', color: 'Navy Blue', price: 259500, originalPrice: 259500, badge: 'Top Rated', desc: 'Wingback accent chair with tall back, premium fabric, perfect for reading nooks.', category: 'Coffee Chairs', subcategory: 'Lounge Chairs', subcategorySlug: 'lounge' },
+    { name: 'Cocktail Accent Chair', material: 'Teak', color: 'Beige', price: 266000, originalPrice: 266000, badge: null, desc: 'Cocktail accent chair with curved back, premium velvet, gold metal legs, mid-century style.', category: 'Coffee Chairs', subcategory: 'Accent Chairs', subcategorySlug: 'accent' },
+    { name: 'Slipper Accent Chair', material: 'Walnut', color: 'Forest Green', price: 272500, originalPrice: 272500, badge: 'Bestseller', desc: 'Slipper accent chair with low profile, armless design, premium fabric, versatile.', category: 'Coffee Chairs', subcategory: 'Recliners', subcategorySlug: 'recliners' },
+    { name: 'Leather Accent Chair', material: 'Pine', color: 'Burgundy', price: 279000, originalPrice: 320850, badge: 'Bestseller', desc: 'Leather accent chair with top-grain leather, solid wood frame, classic design.', category: 'Coffee Chairs', subcategory: 'Lounge Chairs', subcategorySlug: 'lounge' },
+    { name: 'Boucle Accent Chair', material: 'Oak', color: 'Black', price: 285500, originalPrice: 285500, badge: 'Sale', desc: 'Boucle accent chair with textured fabric, sculptural shape, modern statement piece.', category: 'Coffee Chairs', subcategory: 'Accent Chairs', subcategorySlug: 'accent' },
+    { name: 'Mid-Century Accent', material: 'Mahogany', color: 'Grey', price: 292000, originalPrice: 292000, badge: 'New', desc: 'Mid-century accent chair with tapered legs, premium wool, walnut frame, iconic design.', category: 'Coffee Chairs', subcategory: 'Recliners', subcategorySlug: 'recliners' },
+    { name: 'Recliner Chair', material: 'Pine & Steel', color: 'Tan', price: 298500, originalPrice: 298500, badge: 'Top Rated', desc: 'Recliner chair with power recline, USB charging, premium leather, lumbar support.', category: 'Coffee Chairs', subcategory: 'Lounge Chairs', subcategorySlug: 'lounge' },
+    { name: 'Push-Back Recliner', material: 'Pine & Linen', color: 'Mustard', price: 305000, originalPrice: 350750, badge: null, desc: 'Push-back recliner with manual operation, premium fabric, hardwood frame, classic design.', category: 'Coffee Chairs', subcategory: 'Accent Chairs', subcategorySlug: 'accent' },
+    { name: 'Power Recliner', material: 'Pine & Velvet', color: 'Cognac', price: 311500, originalPrice: 311500, badge: 'Bestseller', desc: 'Power recliner with infinite positions, USB ports, premium leather, headrest adjustment.', category: 'Coffee Chairs', subcategory: 'Recliners', subcategorySlug: 'recliners' },
+    { name: 'Massage Recliner', material: 'Pine & Leather', color: 'Brown', price: 318000, originalPrice: 318000, badge: 'Bestseller', desc: 'Massage recliner with heat therapy, 8 massage motors, premium leather, remote control.', category: 'Coffee Chairs', subcategory: 'Lounge Chairs', subcategorySlug: 'lounge' },
+    { name: 'Lounge Recliner', material: 'Walnut & Wool', color: 'Emerald Green', price: 324500, originalPrice: 324500, badge: 'Sale', desc: 'Lounge recliner with extended footrest, premium fabric, perfect for relaxation.', category: 'Coffee Chairs', subcategory: 'Accent Chairs', subcategorySlug: 'accent' },
+    { name: 'Theater Recliner', material: 'Sheesham', color: 'Red Mahogany', price: 331000, originalPrice: 380649, badge: 'New', desc: 'Theater recliner with cup holder, LED lighting, premium leather, USB charging.', category: 'Coffee Chairs', subcategory: 'Recliners', subcategorySlug: 'recliners' },
+    { name: 'Lift Recliner', material: 'Teak', color: 'Walnut Brown', price: 337500, originalPrice: 337500, badge: 'Top Rated', desc: 'Lift recliner with power lift assistance, perfect for elderly, premium fabric, easy exit.', category: 'Coffee Chairs', subcategory: 'Lounge Chairs', subcategorySlug: 'lounge' },
+    { name: 'Rocker Recliner', material: 'Walnut', color: 'Charcoal Grey', price: 344000, originalPrice: 344000, badge: null, desc: 'Rocker recliner with smooth rocking motion, premium fabric, solid wood frame.', category: 'Coffee Chairs', subcategory: 'Accent Chairs', subcategorySlug: 'accent' },
+    { name: 'Wall-Hugger Recliner', material: 'Pine', color: 'Cream', price: 350500, originalPrice: 350500, badge: 'Bestseller', desc: 'Wall-hugger recliner with space-saving design, premium leather, full recline within 4 inches of wall.', category: 'Coffee Chairs', subcategory: 'Recliners', subcategorySlug: 'recliners' },
+
+    { name: 'Modern Lift Coffee Table', material: 'Walnut', color: 'Dark Walnut', price: 45000, originalPrice: 52000, badge: 'Sale', desc: 'Innovative lift-top mechanism reveals hidden storage for remotes, magazines, and blankets. Soft-close hinges.', category: 'Coffee Tables', subcategory: 'Lift-Top Coffee Tables', subcategorySlug: 'lift-top' },
+    { name: 'Storage Coffee Table', material: 'Sheesham', color: 'Natural', price: 38000, originalPrice: 38000, badge: 'New', desc: 'Spacious hidden storage compartment with lift-top design and soft-close hinges, hand-finished.', category: 'Coffee Tables', subcategory: 'Storage Coffee Tables', subcategorySlug: 'storage' },
+    { name: 'Designer Marble Coffee Table', material: 'MDF & Marble', color: 'Black & Gold', price: 65000, originalPrice: 75000, badge: 'Top Rated', desc: 'Luxury coffee table with genuine marble top, gold metal base, modern designer piece.', category: 'Coffee Tables', subcategory: 'Designer Coffee Tables', subcategorySlug: 'designer' },
+    { name: 'Round Coffee Table', material: 'Sheesham', color: 'Walnut', price: 32000, originalPrice: 38000, badge: 'New', desc: 'Round coffee table with turned pedestal base, hand-finished Sheesham, classic design.', category: 'Coffee Tables', subcategory: 'Designer Coffee Tables', subcategorySlug: 'designer' },
+    { name: 'Nesting Coffee Tables', material: 'Acacia', color: 'Natural', price: 35000, originalPrice: 35000, badge: null, desc: 'Set of 2 nesting coffee tables in acacia wood with steel legs, space-saving design.', category: 'Coffee Tables', subcategory: 'Designer Coffee Tables', subcategorySlug: 'designer' },
+    { name: 'Industrial Coffee Table', material: 'Pine & Steel', color: 'Charcoal', price: 42000, originalPrice: 48000, badge: 'Sale', desc: 'Industrial-style coffee table with reclaimed pine top and powder-coated steel base.', category: 'Coffee Tables', subcategory: 'Storage Coffee Tables', subcategorySlug: 'storage' },
+    { name: 'Glass Top Coffee Table', material: 'Sheesham & Glass', color: 'Natural', price: 38000, originalPrice: 45000, badge: null, desc: 'Modern glass-top coffee table with solid Sheesham base, easy to clean surface.', category: 'Coffee Tables', subcategory: 'Designer Coffee Tables', subcategorySlug: 'designer' },
+    { name: 'Live Edge Coffee Table', material: 'Suar Wood', color: 'Natural', price: 58000, originalPrice: 68000, badge: 'Bestseller', desc: 'Live edge coffee table with unique natural wood edge, statement piece for modern living.', category: 'Coffee Tables', subcategory: 'Designer Coffee Tables', subcategorySlug: 'designer' },
+    { name: 'Walnut Dining Table Set', material: 'Walnut', color: 'Walnut', price: 285000, originalPrice: 320000, badge: 'Bestseller', desc: '6-seater dining set with solid walnut table and butterfly leaf extension, plus 6 upholstered chairs.', category: 'Dining Tables', subcategory: '6-Seater Dining', subcategorySlug: '6-seater' },
+    { name: 'Modern 4-Seater Dining', material: 'Sheesham', color: 'Natural Teak', price: 125000, originalPrice: 145000, badge: 'Sale', desc: 'Modern 4-seater dining table in solid Sheesham with sleek tapered legs, seats 4 comfortably.', category: 'Dining Tables', subcategory: '4-Seater Dining', subcategorySlug: '4-seater' },
+    { name: 'Farmhouse Dining Table', material: 'Reclaimed Pine', color: 'Weathered Grey', price: 195000, originalPrice: 225000, badge: 'New', desc: 'Rustic farmhouse dining table crafted from reclaimed pine, perfect for family gatherings.', category: 'Dining Tables', subcategory: '6-Seater Dining', subcategorySlug: '6-seater' },
+    { name: '8-Seater Marble Dining', material: 'Marble & Sheesham', color: 'White & Walnut', price: 385000, originalPrice: 445000, badge: 'Top Rated', desc: 'Statement 8-seater dining table with genuine marble top and solid Sheesham base.', category: 'Dining Tables', subcategory: '8-Seater Dining', subcategorySlug: '8-seater' },
+    { name: 'Glass Top Dining Table', material: 'Sheesham & Glass', color: 'Clear & Sheesham', price: 145000, originalPrice: 165000, badge: null, desc: 'Modern glass-top dining table with Sheesham base, seats 4, easy-clean surface.', category: 'Dining Tables', subcategory: '4-Seater Dining', subcategorySlug: '4-seater' },
+    { name: 'Round Dining Table', material: 'Teak', color: 'Teak Honey', price: 215000, originalPrice: 245000, badge: 'Bestseller', desc: 'Round dining table in solid teak, seats 6, perfect for intimate family meals.', category: 'Dining Tables', subcategory: '6-Seater Dining', subcategorySlug: '6-seater' },
+    { name: 'Extendable Dining Table', material: 'Oak', color: 'Light Oak', price: 245000, originalPrice: 285000, badge: 'Sale', desc: 'Extendable dining table in solid oak, seats 6 closed, 8 when extended, with butterfly leaf.', category: 'Dining Tables', subcategory: '8-Seater Dining', subcategorySlug: '8-seater' },
+    { name: 'Counter Height Dining', material: 'Pine', color: 'White Wash', price: 165000, originalPrice: 195000, badge: 'New', desc: 'Counter-height dining table with 4 stools, modern farmhouse style, perfect for kitchens.', category: 'Dining Tables', subcategory: '4-Seater Dining', subcategorySlug: '4-seater' },
+    { name: 'Royal Teak Wardrobe', material: 'Teak', color: 'Teak Honey', price: 245000, originalPrice: 280000, badge: 'Bestseller', desc: 'Spacious 4-door wardrobe in solid teak with full-length mirror, hanging rails and velvet-lined jewelry drawer.', category: 'Wardrobes', subcategory: 'Hinged Wardrobes', subcategorySlug: 'hinged' },
+    { name: 'Sliding Door Wardrobe', material: 'MDF', color: 'White', price: 135000, originalPrice: 150000, badge: 'Sale', desc: 'Modern sliding door wardrobe with full mirrored panels, double hanging rail and shoe rack.', category: 'Wardrobes', subcategory: 'Sliding Wardrobes', subcategorySlug: 'sliding' },
+    { name: 'Walk-in Closet System', material: 'MDF', color: 'Grey', price: 285000, originalPrice: 325000, badge: 'Top Rated', desc: 'Custom walk-in closet system with hanging rails, shelves, drawers, shoe rack and LED lighting.', category: 'Wardrobes', subcategory: 'Walk-in Wardrobes', subcategorySlug: 'walk-in' },
+    { name: 'Classic 3-Door Wardrobe', material: 'Pine', color: 'Cherry Stain', price: 115000, originalPrice: 135000, badge: 'New', desc: 'Classic 3-door wardrobe in solid pine with hanging rail, shelves and full-length mirror.', category: 'Wardrobes', subcategory: 'Hinged Wardrobes', subcategorySlug: 'hinged' },
+    { name: 'Industrial Wardrobe', material: 'Pine & Steel', color: 'Charcoal', price: 165000, originalPrice: 195000, badge: null, desc: 'Industrial-style wardrobe with steel frame, solid pine panels and metal hardware.', category: 'Wardrobes', subcategory: 'Hinged Wardrobes', subcategorySlug: 'hinged' },
+    { name: 'Compact Sliding Wardrobe', material: 'MDF', color: 'Oak', price: 95000, originalPrice: 110000, badge: 'Sale', desc: 'Compact sliding wardrobe perfect for small bedrooms, 2 sliding doors, hanging rail and shelf.', category: 'Wardrobes', subcategory: 'Sliding Wardrobes', subcategorySlug: 'sliding' },
 ];
 
 const rawProducts = productsData.map((p) => ({
@@ -249,57 +310,52 @@ const rawProducts = productsData.map((p) => ({
   reviews: makeReviews(p.name, p.seed),
 }));
 
-// Validate all products on load
 const validateProducts = (prods) => {
   return prods.map((p, index) => ({
     id: p.id != null ? String(p.id) : String(index + 1),
-    slug: p.slug || p.name?.toLowerCase().replace(/\s+/g, '-') || `product-${index}`,
+    slug: p.slug || p.name?.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') || `product-${index}`,
     name: p.name || 'Unnamed Product',
     category: p.category || 'Uncategorized',
     subcategory: p.subcategory || '',
-    shortDesc: p.shortDesc || '',
-    description: p.description || '',
+    shortDesc: p.desc || '',
+    description: `<p>${p.desc || ''}</p>`,
     price: Number(p.price) || 0,
     originalPrice: Number(p.originalPrice) || Number(p.price) || 0,
     discount: p.discount || 0,
     currency: 'PKR',
     material: p.material || '',
-    colors: Array.isArray(p.colors) ? p.colors : [],
-    dimensions: p.dimensions || { width: 0, height: 0, depth: 0, unit: 'inches' },
-    weight: p.weight || '',
-    rating: Number(p.rating) || 0,
-    reviewCount: Number(p.reviewCount) || 0,
+    colors: p.color ? [{ name: p.color, hex: '#888888' }] : [],
+    dimensions: { width: 0, height: 0, depth: 0, unit: 'inches' },
+    weight: '',
+    rating: Number(p.rating) || 4.5,
+    reviewCount: Number(p.reviewCount) || 25,
     badge: p.badge || null,
     images: Array.isArray(p.images) && p.images.length > 0
       ? p.images
       : ['https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80'],
     inStock: p.inStock !== undefined ? p.inStock : true,
     stockCount: p.stockCount || 10,
-    isNew: p.isNew || false,
-    isFeatured: p.isFeatured || false,
-    isOnSale: p.isOnSale || false,
-    tags: Array.isArray(p.tags) ? p.tags : [],
-    sku: p.sku || `WM-${String(index + 1).padStart(4, '0')}`,
+    isNew: p.isNew || (p.badge === 'New'),
+    isFeatured: p.isFeatured || (p.badge === 'Bestseller' || p.badge === 'Top Rated'),
+    isOnSale: p.isOnSale || (p.badge === 'Sale'),
+    tags: [p.subcategorySlug, p.category.toLowerCase().replace(/\s+/g, '-')].filter(Boolean),
+    sku: `WM-${String(index + 1).padStart(4, '0')}`,
     reviews: Array.isArray(p.reviews) ? p.reviews : [],
     seed: p.seed || `seed-${index}`,
+    subcategorySlug: p.subcategorySlug,
   }));
 };
 
 export const products = validateProducts(rawProducts);
 
 export const getProductBySlug = (slug) => products.find((p) => p.slug === slug);
-
 export const getProductById = (id) => products.find((p) => p.id === id);
-
 export const getFeaturedProducts = () => products.filter((p) => p.isFeatured);
-
 export const getNewArrivals = () => products.filter((p) => p.isNew);
-
 export const getRelatedProducts = (product, limit = 4) =>
   products
     .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, limit);
 
-export const materials = ['Sheesham', 'Teak', 'MDF', 'Walnut', 'Oak', 'Pine', 'Acrylic'];
-
+export const materials = ['Sheesham', 'Teak', 'Walnut', 'Pine', 'Oak', 'Mahogany', 'MDF'];
 export default products;

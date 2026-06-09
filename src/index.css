@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -101,11 +101,11 @@
 
   /* Buttons */
   .btn-primary {
-    @apply inline-flex items-center justify-center bg-gold text-darktext font-medium px-6 py-3 rounded-sm transition-all duration-300 hover:bg-gold-light focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2;
+    @apply inline-flex items-center justify-center bg-gold text-darktext font-medium px-6 py-3 rounded-sm transition-all duration-300 hover:bg-gold-light hover:scale-[1.02] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2;
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center border-2 border-darktext text-darktext font-medium px-6 py-3 rounded-sm transition-all duration-300 hover:bg-gold hover:border-gold focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2;
+    @apply inline-flex items-center justify-center border-2 border-darktext text-darktext font-medium px-6 py-3 rounded-sm transition-all duration-300 hover:bg-gold hover:border-gold hover:text-darktext focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2;
   }
 
   .btn-dark {
@@ -219,4 +219,34 @@
 
 .animate-pulse-ring {
   animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes whatsapp-pulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* Custom gold dot cursor (desktop only) */
+@media (hover: hover) and (pointer: fine) {
+  .wm-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #C49A2A;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transition: transform 0.15s ease-out;
+  }
+  .wm-cursor.hover {
+    transform: scale(2.5);
+  }
+}
+
+/* Smooth image loading */
+img {
+  transition: opacity 0.4s ease;
 }
