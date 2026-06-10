@@ -1,28 +1,17 @@
-import { useMemo } from 'react'
-import { products as hardcodedProducts } from '../data/products'
+import { useMemo } from 'react';
+import { products as hardcoded } from '../data/products';
 
-const useProducts = () => {
-  return useMemo(() => {
-    try {
-      const saved = JSON.parse(
-        localStorage.getItem('woodmart-products') || '[]'
-      )
-      const deleted = JSON.parse(
-        localStorage.getItem('woodmart-deleted-products') || '[]'
-      )
-      const validSaved = Array.isArray(saved) ? saved : []
-      const validDeleted = Array.isArray(deleted) ? deleted : []
-
-      const filteredHardcoded = hardcodedProducts.filter(
-        p => !validDeleted.includes(p.id)
-      )
-
-      return [...validSaved, ...filteredHardcoded]
-    } catch (error) {
-      console.error('useProducts error:', error)
-      return hardcodedProducts || []
-    }
-  }, [])
+export function readProducts() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('woodmart-products') || '[]');
+    const deleted = JSON.parse(localStorage.getItem('woodmart-deleted-products') || '[]');
+    const filtered = hardcoded.filter((p) => !deleted.includes(String(p.id)) && !deleted.includes(p.id));
+    return [...(Array.isArray(saved) ? saved : []), ...filtered];
+  } catch {
+    return hardcoded;
+  }
 }
 
-export default useProducts
+export default function useProducts() {
+  return useMemo(() => readProducts(), []);
+}

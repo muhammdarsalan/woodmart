@@ -6,7 +6,6 @@ import DeliveryForm from '../components/checkout/DeliveryForm';
 import PaymentForm from '../components/checkout/PaymentForm';
 import OrderReview from '../components/checkout/OrderReview';
 import OrderSuccess from '../components/checkout/OrderSuccess';
-import { generateOrderNumber } from '../utils/helpers';
 
 export default function Checkout() {
   const items = useCartStore((s) => s.items);
@@ -19,6 +18,23 @@ export default function Checkout() {
   const [delivery, setDelivery] = useState(null);
   const [payment, setPayment] = useState('cod');
   const [orderNumber, setOrderNumber] = useState(null);
+
+  const placeOrder = () => {
+    const id = `WM-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+    const orders = JSON.parse(localStorage.getItem('woodmart-orders') || '[]');
+    localStorage.setItem('woodmart-orders', JSON.stringify([{
+      id,
+      date: new Date().toISOString(),
+      customer: delivery,
+      items,
+      subtotal,
+      deliveryFee,
+      total,
+      paymentMethod: payment,
+      status: 'Pending',
+    }, ...(Array.isArray(orders) ? orders : [])]));
+    setOrderNumber(id);
+  };
 
   if (items.length === 0 && !orderNumber) {
     return <Navigate to="/cart" replace />;
@@ -70,7 +86,7 @@ export default function Checkout() {
               discount={promoDiscount}
               total={total}
               onBack={() => setStep(2)}
-              onPlaceOrder={() => setOrderNumber(generateOrderNumber())}
+              onPlaceOrder={placeOrder}
             />
           )}
         </div>

@@ -83,11 +83,11 @@ export default function MobileMenu() {
             </nav>
 
             <div className="p-6 border-t border-gold/20 space-y-4">
-              <a href="tel:+923000000000" className="flex items-center gap-2 text-cream hover:text-gold">
-                <Phone className="w-5 h-5" /> 0300-0000000
+              <a href="tel:+923459229581" className="flex items-center gap-2 text-cream hover:text-gold">
+                <Phone className="w-5 h-5" /> 0345-9229581
               </a>
               <a
-                href="https://wa.me/923000000000"
+                href="https://wa.me/923459229581"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-cream hover:text-gold"

@@ -22,15 +22,15 @@ export default function ShowroomBanner() {
             <div className="space-y-4">
               <p className="flex items-start gap-3 text-beige-muted">
                 <MapPin className="w-5 h-5 text-gold shrink-0 mt-0.5" />
-                Shop 12, Blue Area Plaza, Jinnah Avenue, Islamabad
+                Main G.T. Rd, opposite Science School Rd, T Chowk, Islamabad
               </p>
               <p className="flex items-center gap-3 text-beige-muted">
                 <Clock className="w-5 h-5 text-gold shrink-0" />
-                Mon–Sat: 10:00 AM – 8:00 PM · Sun: 12:00 PM – 6:00 PM
+                Mon-Thu & Sat-Sun: 10:30 AM – 9:30 PM · Friday: Closed
               </p>
               <p className="flex items-center gap-3 text-gold">
                 <Phone className="w-5 h-5 shrink-0" />
-                0300-0000000
+                0345-9229581
               </p>
             </div>
             <Link to="/contact" className="inline-block mt-8">

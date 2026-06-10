@@ -13,6 +13,7 @@ import CustomCursor from './components/ui/CustomCursor';
 import { PageSkeleton } from './components/ui/Skeleton';
 import ErrorBoundary from './components/ErrorBoundary';
 import { useScrollToTop } from './hooks/useScrollToTop';
+import ProtectedRoute from './admin/ProtectedRoute';
 
 // Lazy imports wrapped in catch to prevent white screens
 const Home = lazy(() =>
@@ -48,19 +49,80 @@ const BlogPost = lazy(() =>
 const NotFound = lazy(() =>
   import('./pages/NotFound').catch(() => ({ default: () => <div>Failed to load page</div> }))
 );
+const PrivacyPolicy = lazy(() =>
+  import('./pages/PrivacyPolicy').catch(() => ({ default: () => <div>Failed to load page</div> }))
+);
+const Terms = lazy(() =>
+  import('./pages/Terms').catch(() => ({ default: () => <div>Failed to load page</div> }))
+);
+const AdminLogin = lazy(() =>
+  import('./pages/admin/AdminLogin').catch(() => ({ default: () => <div>Failed to load page</div> }))
+);
+const AdminLayout = lazy(() =>
+  import('./pages/admin/AdminLayout').catch(() => ({ default: ({ children }) => <>{children}</> }))
+);
+const AdminDashboard = lazy(() =>
+  import('./pages/admin/AdminDashboard').catch(() => ({ default: () => <div>Failed to load page</div> }))
+);
+const AdminProducts = lazy(() =>
+  import('./pages/admin/AdminProducts').catch(() => ({ default: () => <div>Failed to load page</div> }))
+);
+const AddEditProduct = lazy(() =>
+  import('./pages/admin/AddEditProduct').catch(() => ({ default: () => <div>Failed to load page</div> }))
+);
+const AdminCategories = lazy(() =>
+  import('./pages/admin/AdminCategories').catch(() => ({ default: () => <div>Failed to load page</div> }))
+);
+const AdminOrders = lazy(() =>
+  import('./pages/admin/AdminOrders').catch(() => ({ default: () => <div>Failed to load page</div> }))
+);
+const AdminMessages = lazy(() =>
+  import('./pages/admin/AdminMessages').catch(() => ({ default: () => <div>Failed to load page</div> }))
+);
 
 function AppRoutes() {
   const location = useLocation();
   const isCheckout = location.pathname === '/checkout';
+  const isAdmin = location.pathname.startsWith('/admin');
   useScrollToTop();
 
   return (
     <>
-      <Navbar minimal={isCheckout} />
+      {!isAdmin && <Navbar minimal={isCheckout} />}
       <main className={isCheckout ? '' : 'min-h-screen'}>
         <AnimatePresence mode="wait" initial={false}>
           <Suspense fallback={<PageSkeleton />}>
             <Routes location={location} key={location.pathname}>
+              <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route
+                path="/admin/dashboard"
+                element={<ProtectedRoute><AdminLayout><AdminDashboard /></AdminLayout></ProtectedRoute>}
+              />
+              <Route
+                path="/admin/products"
+                element={<ProtectedRoute><AdminLayout><AdminProducts /></AdminLayout></ProtectedRoute>}
+              />
+              <Route
+                path="/admin/products/add"
+                element={<ProtectedRoute><AdminLayout><AddEditProduct /></AdminLayout></ProtectedRoute>}
+              />
+              <Route
+                path="/admin/products/edit/:id"
+                element={<ProtectedRoute><AdminLayout><AddEditProduct /></AdminLayout></ProtectedRoute>}
+              />
+              <Route
+                path="/admin/categories"
+                element={<ProtectedRoute><AdminLayout><AdminCategories /></AdminLayout></ProtectedRoute>}
+              />
+              <Route
+                path="/admin/orders"
+                element={<ProtectedRoute><AdminLayout><AdminOrders /></AdminLayout></ProtectedRoute>}
+              />
+              <Route
+                path="/admin/messages"
+                element={<ProtectedRoute><AdminLayout><AdminMessages /></AdminLayout></ProtectedRoute>}
+              />
               <Route
                 path="/"
                 element={
@@ -163,6 +225,26 @@ function AppRoutes() {
                 }
               />
               <Route
+                path="/privacy-policy"
+                element={
+                  <ErrorBoundary>
+                    <PageTransition>
+                      <PrivacyPolicy />
+                    </PageTransition>
+                  </ErrorBoundary>
+                }
+              />
+              <Route
+                path="/terms"
+                element={
+                  <ErrorBoundary>
+                    <PageTransition>
+                      <Terms />
+                    </PageTransition>
+                  </ErrorBoundary>
+                }
+              />
+              <Route
                 path="*"
                 element={
                   <ErrorBoundary>
@@ -176,11 +258,11 @@ function AppRoutes() {
           </Suspense>
         </AnimatePresence>
       </main>
-      {!isCheckout && <Footer />}
-      <CartDrawer />
-      <WhatsAppButton />
-      <ScrollToTop />
-      <CustomCursor />
+      {!isCheckout && !isAdmin && <Footer />}
+      {!isAdmin && <CartDrawer />}
+      {!isAdmin && <WhatsAppButton />}
+      {!isAdmin && <ScrollToTop />}
+      {!isAdmin && <CustomCursor />}
     </>
   );
 }

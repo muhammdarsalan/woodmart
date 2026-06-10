@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Heart, ShoppingBag, Star } from 'lucide-react';
-import { getNewArrivals } from '../../data/products';
 import toast from 'react-hot-toast';
 import { useCartStore } from '../../store/cartStore';
 import { useWishlistStore } from '../../store/wishlistStore';
 import { fadeInUp, staggerContainer } from '../../utils/animations';
+import useProducts from '../../hooks/useProducts';
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80&auto=format&fit=crop';
 
@@ -92,11 +92,12 @@ function ArrivalCard({ product }) {
 }
 
 export default function NewArrivals() {
+  const products = useProducts();
   // Get 4 new arrivals, fall back to bestseller if no new
-  let newProducts = getNewArrivals().slice(0, 4);
+  let newProducts = products.filter((p) => p.isNew).slice(0, 4);
   if (newProducts.length < 4) {
     newProducts = newProducts.concat(
-      getNewArrivals().slice(0, 4 - newProducts.length)
+      products.filter((p) => p.isNew).slice(0, 4 - newProducts.length)
     );
   }
 

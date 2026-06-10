@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getProductBySlug, getRelatedProducts } from '../data/products';
+import useProducts from '../hooks/useProducts';
 import ImageGallery from '../components/product/ImageGallery';
 import ProductInfo from '../components/product/ProductInfo';
 import ProductTabs from '../components/product/ProductTabs';
@@ -8,11 +8,12 @@ import RelatedProducts from '../components/product/RelatedProducts';
 
 export default function ProductDetail() {
   const { slug } = useParams();
+  const products = useProducts();
 
   // Defensive lookup — never throw, never crash
   let product = null;
   try {
-    product = getProductBySlug(slug);
+    product = products.find((p) => p.slug === slug);
   } catch (err) {
     console.error('ProductDetail lookup error:', err);
     product = null;
@@ -42,7 +43,7 @@ export default function ProductDetail() {
 
   let related = [];
   try {
-    related = getRelatedProducts(product) || [];
+    related = products.filter((p) => p.category === product.category && String(p.id) !== String(product.id)).slice(0, 4);
   } catch (err) {
     console.error('Related products error:', err);
     related = [];

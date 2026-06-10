@@ -26,8 +26,6 @@ function isLightNavPage(pathname) {
   return LIGHT_NAV_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 }
 
-const LOGO_URL = '/logo/logo.jpeg';
-
 export default function Navbar({ minimal = false }) {
   const [scrolled, setScrolled] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
@@ -115,22 +113,12 @@ export default function Navbar({ minimal = false }) {
       ? 'nav-icon text-darktext hover:text-gold'
       : 'nav-icon text-lighttext hover:text-gold';
 
-  // Logo: white version for dark/scrolled-transparent navbar, normal for light nav
-  const logoFilter = isLightNav
-    ? 'none'
-    : 'brightness(0) invert(1)';
-
   if (minimal) {
     return (
       <header className="fixed top-0 left-0 right-0 z-50 bg-brown shadow-lg">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center shrink-0">
-            <img
-              src={LOGO_URL}
-              alt="Wood Mart"
-              className="h-10 w-auto object-contain"
-              style={{ filter: 'brightness(0) invert(1)' }}
-            />
+            <img src="/logo/logo.jpeg" alt="Wood Mart" className="h-10 w-auto object-contain" />
           </Link>
           <Link to="/cart" className="text-lighttext hover:text-gold text-sm">Back to Cart</Link>
         </div>
@@ -153,12 +141,7 @@ export default function Navbar({ minimal = false }) {
         <div className="max-w-7xl mx-auto px-4 lg:px-6">
           <div className="flex items-center justify-between h-20">
             <Link to="/" className="flex items-center shrink-0">
-              <img
-                src={LOGO_URL}
-                alt="Wood Mart"
-                className="h-10 w-auto object-contain transition-all duration-300"
-                style={{ filter: logoFilter }}
-              />
+              <img src="/logo/logo.jpeg" alt="Wood Mart" className="h-10 w-auto object-contain" />
             </Link>
 
             <nav className="hidden lg:flex items-center gap-8">

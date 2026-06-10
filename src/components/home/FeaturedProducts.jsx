@@ -4,8 +4,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Heart, ShoppingBag, Star } from 'lucide-react';
-import { products } from '../../data/products';
 import { categories } from '../../data/categories';
+import useProducts from '../../hooks/useProducts';
 import { useCartStore } from '../../store/cartStore';
 import { useWishlistStore } from '../../store/wishlistStore';
 import toast from 'react-hot-toast';
@@ -101,11 +101,12 @@ function ProductCardSlide({ product }) {
 
 export default function FeaturedProducts() {
   const [activeTab, setActiveTab] = useState('All');
+  const products = useProducts();
 
   // Get featured products (Bestseller or Top Rated badge)
   const featured = useMemo(() => {
     return products.filter((p) => p.badge === 'Bestseller' || p.badge === 'Top Rated' || p.isFeatured);
-  }, []);
+  }, [products]);
 
   const filtered = activeTab === 'All'
     ? featured

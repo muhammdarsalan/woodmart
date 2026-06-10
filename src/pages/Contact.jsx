@@ -7,6 +7,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import Button from '../components/ui/Button';
 import { fadeInUp } from '../utils/animations';
+import { categories } from '../data/categories';
 
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
@@ -19,34 +20,20 @@ const schema = z.object({
 
 const showrooms = [
   {
-    name: 'Blue Area Showroom',
-    address: 'Shop 12, Blue Area Plaza, Jinnah Avenue, Islamabad',
-    hours: 'Mon–Sat: 10AM–8PM · Sun: 12PM–6PM',
-    phone: '0300-0000000',
-    map: 'https://maps.google.com/maps?q=Blue+Area+Islamabad&output=embed',
-  },
-  {
-    name: 'F-7 Markaz Showroom',
-    address: 'Plot 23, F-7 Markaz, Islamabad',
-    hours: 'Mon–Sat: 10AM–8PM · Sun: 12PM–6PM',
-    phone: '0301-0000000',
-    map: 'https://maps.google.com/maps?q=F-7+Markaz+Islamabad&output=embed',
-  },
-  {
-    name: 'Rawalpindi Showroom',
-    address: 'Saddar Road, Near Raja Bazaar, Rawalpindi',
-    hours: 'Mon–Sat: 10AM–8PM · Sun: Closed',
-    phone: '0302-0000000',
-    map: 'https://maps.google.com/maps?q=Saddar+Rawalpindi&output=embed',
+    name: 'Main G.T. Rd Showroom',
+    address: 'Main G.T. Rd, opposite Science School Rd, T Chowk, Islamabad, 44000',
+    hours: 'Mon-Thu & Sat-Sun: 10:30 AM – 9:30 PM · Friday: Closed',
+    phone: '0345-9229581',
+    map: 'https://maps.google.com/maps?q=T+Chowk+GT+Road+Islamabad&output=embed',
   },
 ];
 
 const faqs = [
   { q: 'What are your delivery charges?', a: 'Free delivery in Islamabad on orders above PKR 50,000. Standard fee of PKR 1,500 for smaller orders. Other cities: PKR 2,500.' },
   { q: 'What warranty do you offer?', a: '15-year structural warranty on all solid wood furniture. Upholstery and hardware covered for 2 years.' },
-  { q: 'Do you accept custom orders?', a: 'Yes! Visit any showroom or contact us via WhatsApp for custom dimensions, finishes, and designs. Lead time: 3-4 weeks.' },
-  { q: 'Do you offer installment plans?', a: 'We accept COD, bank transfer, Easypaisa, and JazzCash. Installment plans available through selected bank partners — ask in showroom.' },
-  { q: 'How long does delivery take?', a: 'Islamabad/Rawalpindi: 3-5 working days. Lahore, Karachi, Peshawar: 5-7 working days. Custom orders: 3-4 weeks.' },
+  { q: 'Do you accept custom orders?', a: 'Yes! Visit our showroom or contact us via WhatsApp 0345-9229581 for custom dimensions, finishes, and designs. Lead time: 3-4 weeks.' },
+  { q: 'Do you offer installment plans?', a: 'We accept COD, bank transfer, Easypaisa, and JazzCash. Installment plans available through selected bank partners — contact us for details.' },
+  { q: 'How long does delivery take?', a: 'Islamabad: 3-5 working days. Other cities: 5-7 working days. Custom orders: 3-4 weeks.' },
   { q: 'Can I return furniture?', a: 'Returns accepted within 7 days for unused items in original packaging. Custom-made pieces are non-returnable.' },
 ];
 
@@ -71,7 +58,19 @@ export default function Contact() {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = () => {
+  const onSubmit = (data) => {
+    const msgs = JSON.parse(localStorage.getItem('woodmart-messages') || '[]');
+    localStorage.setItem('woodmart-messages', JSON.stringify([{
+      id: Date.now(),
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      category: data.category,
+      subject: data.subject,
+      message: data.message,
+      date: new Date().toISOString(),
+      isRead: false,
+    }, ...(Array.isArray(msgs) ? msgs : [])]));
     toast.success('Message sent! We\'ll get back to you within 24 hours.');
     reset();
   };
@@ -136,7 +135,7 @@ export default function Contact() {
                 <label className="block text-sm font-medium text-brown-light mb-1">Category</label>
                 <select {...register('category')} className="input-field">
                   <option value="">Select category</option>
-                  {['Living Room', 'Bedroom', 'Dining', 'Office', 'Outdoor', 'Kids', 'Custom Order', 'Other'].map((c) => (
+                  {[...categories.map((c) => c.name), 'Custom Order', 'Other'].map((c) => (
                     <option key={c} value={c}>{c}</option>
                   ))}
                 </select>
@@ -158,20 +157,20 @@ export default function Contact() {
             <h2 className="font-serif text-2xl text-darktext mb-6">Find Us</h2>
             <div className="aspect-video rounded-lg overflow-hidden mb-6">
               <iframe
-                src="https://maps.google.com/maps?q=Blue+Area+Islamabad&output=embed"
+                src="https://maps.google.com/maps?q=T+Chowk+GT+Road+Islamabad&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
-                title="Wood Mart Blue Area Location"
+                title="Wood Mart Main Showroom Location"
               />
             </div>
             <div className="space-y-3 text-sm text-brown-light">
-              <p><strong className="text-darktext">Email:</strong> hello@woodmart.pk</p>
-              <p><strong className="text-darktext">Phone:</strong> 0300-0000000</p>
-              <p><strong className="text-darktext">WhatsApp:</strong> 0300-0000000</p>
-              <a href="https://wa.me/923000000000" className="inline-block text-gold hover:underline">Chat on WhatsApp →</a>
+              <p><strong className="text-darktext">Email:</strong> szahid701@gmail.com</p>
+              <p><strong className="text-darktext">Phone:</strong> 0345-9229581 or 0316-5344694</p>
+              <p><strong className="text-darktext">WhatsApp:</strong> 0345-9229581</p>
+              <a href="https://wa.me/923459229581" className="inline-block text-gold hover:underline">Chat on WhatsApp →</a>
             </div>
           </div>
         </div>
