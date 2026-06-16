@@ -1,0 +1,32 @@
+{
+  "name": "@pnpm/win-x64",
+  "version": "11.7.0",
+  "keywords": [
+    "pnpm",
+    "pnpm11",
+    "pnpm-artifact"
+  ],
+  "license": "MIT",
+  "funding": "https://opencollective.com/pnpm",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pnpm/pnpm/tree/main/pnpm/artifacts/win32-x64"
+  },
+  "homepage": "https://github.com/pnpm/pnpm/tree/main/pnpm/artifacts/win32-x64#readme",
+  "bugs": {
+    "url": "https://github.com/pnpm/pnpm/issues"
+  },
+  "files": [
+    "pnpm.exe"
+  ],
+  "devDependencies": {
+    "@pnpm/win-x64": "11.7.0"
+  },
+  "scripts": {},
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ]
+}
