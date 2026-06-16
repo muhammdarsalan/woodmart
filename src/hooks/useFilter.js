@@ -5,6 +5,7 @@ import { getCategorySlug } from '../data/categories';
 export default function useFilter(products, perPage = 9) {
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get('category') || '';
+  const subcategory = searchParams.get('subcategory') || '';
   const material = searchParams.get('material') || '';
   const sort = searchParams.get('sort') || 'featured';
   const min = Number(searchParams.get('min') || 0);
@@ -16,6 +17,9 @@ export default function useFilter(products, perPage = 9) {
     let filtered = [...products];
     if (category) {
       filtered = filtered.filter(product => getCategorySlug(product.category) === category);
+    }
+    if (subcategory) {
+      filtered = filtered.filter(product => getCategorySlug(product.subcategory) === subcategory);
     }
     if (material) {
       const materials = material.split(',').map(item => item.toLowerCase());
@@ -36,13 +40,21 @@ export default function useFilter(products, perPage = 9) {
     const safePage = Math.min(page, totalPages);
     const paginated = filtered.slice((safePage - 1) * perPage, safePage * perPage);
     return { filtered, paginated, totalPages, page: safePage };
-  }, [products, category, material, sort, min, max, page, query, perPage]);
+  }, [products, category, subcategory, material, sort, min, max, page, query, perPage]);
 
   const updateParam = (key, value) => {
     const next = new URLSearchParams(searchParams);
-    if (value === '' || value === null || value === undefined) next.delete(key);
-    else next.set(key, String(value));
-    if (key !== 'page') next.set('page', '1');
+    if (typeof key === 'object' && key !== null) {
+      Object.entries(key).forEach(([k, v]) => {
+        if (v === '' || v === null || v === undefined) next.delete(k);
+        else next.set(k, String(v));
+      });
+      next.set('page', '1');
+    } else {
+      if (value === '' || value === null || value === undefined) next.delete(key);
+      else next.set(key, String(value));
+      if (key !== 'page') next.set('page', '1');
+    }
     setSearchParams(next);
   };
 
@@ -50,6 +62,7 @@ export default function useFilter(products, perPage = 9) {
 
   return {
     category,
+    subcategory,
     material,
     sort,
     min,

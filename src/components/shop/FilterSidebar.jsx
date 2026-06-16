@@ -23,7 +23,13 @@ export default function FilterSidebar({ filters }) {
               <input
                 type="checkbox"
                 checked={filters.category === category.slug}
-                onChange={() => filters.updateParam('category', filters.category === category.slug ? '' : category.slug)}
+                onChange={() => {
+                  const isSelected = filters.category === category.slug;
+                  filters.updateParam({
+                    category: isSelected ? '' : category.slug,
+                    subcategory: ''
+                  });
+                }}
                 className="h-4 w-4 accent-primary"
               />
               {category.name}

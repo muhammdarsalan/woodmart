@@ -4,6 +4,10 @@ import { categories } from '../../data/categories';
 export default function ActiveFilters({ filters }) {
   const chips = [];
   if (filters.category) chips.push({ key: 'category', label: categories.find(item => item.slug === filters.category)?.name || filters.category });
+  if (filters.subcategory) {
+    const formatted = filters.subcategory.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    chips.push({ key: 'subcategory', label: formatted });
+  }
   if (filters.material) chips.push({ key: 'material', label: filters.material.split(',').join(', ') });
   if (filters.min) chips.push({ key: 'min', label: 'Min ' + filters.min });
   if (filters.max) chips.push({ key: 'max', label: 'Max ' + filters.max });
