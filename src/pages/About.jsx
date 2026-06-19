@@ -1,7 +1,7 @@
 import ShowroomBanner from '../components/home/ShowroomBanner';
 
 export default function About() {
-  const stats = ['2,400+ Clients', '500+ Products', '15+ Years', '1 Showroom'];
+  const stats = ['2,400+ Clients', '500+ Products', '10+ Years', '1 Showroom'];
   const values = ['Quality', 'Craftsmanship', 'Customer First'];
   return (
     <main className="bg-white">

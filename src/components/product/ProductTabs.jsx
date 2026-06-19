@@ -26,7 +26,7 @@ export default function ProductTabs({ product }) {
             <p>Subcategory: {product.subcategory}</p>
           </div>
         )}
-        {tab === 'delivery' && <p className="max-w-3xl text-sm leading-7 text-secondary">Delivery takes 3-5 days in Islamabad and Rawalpindi, and 5-7 days for other cities. Delivery is free above PKR 50,000.</p>}
+        {tab === 'delivery' && <p className="max-w-3xl text-sm leading-7 text-secondary">Delivery takes 3-5 days in Islamabad and Rawalpindi, and 5-7 days for other cities.</p>}
       </div>
     </section>
   );
