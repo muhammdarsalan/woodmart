@@ -11,7 +11,7 @@ import useFilter from '../hooks/useFilter';
 import useProducts from '../hooks/useProducts';
 
 export default function Shop() {
-  const allProducts = useProducts();
+  const { products: allProducts, loading } = useProducts();
   const filters = useFilter(allProducts, 9);
   const category = filters.category ? getCategoryBySlug(filters.category) : null;
 

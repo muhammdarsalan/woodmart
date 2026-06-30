@@ -1,21 +1,40 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 import Badge from '../../components/ui/Badge';
 import formatPrice from '../../utils/formatPrice';
 import useProducts from '../../hooks/useProducts';
 import { categories } from '../../data/categories';
-import { readStorage } from '../../utils/storage';
+import { supabase } from '../../lib/supabase';
 
 export default function AdminDashboard() {
-  const products = useProducts();
-  const orders = readStorage('woodmart-orders', []);
-  const messages = readStorage('woodmart-messages', []);
+  const { products } = useProducts();
+  const [orderCount, setOrderCount] = useState(0);
+  const [messageCount, setMessageCount] = useState(0);
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const [ordersRes, messagesRes] = await Promise.all([
+          supabase.from('orders').select('id', { count: 'exact', head: true }),
+          supabase.from('messages').select('id', { count: 'exact', head: true })
+        ]);
+        if (ordersRes.count != null) setOrderCount(ordersRes.count);
+        if (messagesRes.count != null) setMessageCount(messagesRes.count);
+      } catch (err) {
+        console.error('Dashboard counts error:', err);
+      }
+    };
+    fetchCounts();
+  }, []);
+
   const stats = [
     ['Products', products.length],
     ['Categories', categories.length],
-    ['Orders', orders.length],
-    ['Messages', messages.length]
+    ['Orders', orderCount],
+    ['Messages', messageCount]
   ];
+
   return (
     <div>
       <h1 className="text-2xl font-semibold text-primary">Dashboard</h1>

@@ -8,32 +8,36 @@ import formatPrice from '../../utils/formatPrice';
 import { handleImageError } from '../../utils/images';
 import { categories } from '../../data/categories';
 import useProducts from '../../hooks/useProducts';
-import { readStorage, writeStorage } from '../../utils/storage';
+import { supabase } from '../../lib/supabase';
 
 export default function AdminProducts() {
-  const allProducts = useProducts();
+  const { products: allProducts, refetch } = useProducts();
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('');
   const [page, setPage] = useState(1);
-  const [hidden, setHidden] = useState([]);
   const products = useMemo(() => {
     const lower = query.toLowerCase();
     return allProducts
-      .filter(product => !hidden.includes(String(product.id)))
       .filter(product => !category || product.category === category)
       .filter(product => !query || product.name.toLowerCase().includes(lower));
-  }, [allProducts, category, query, hidden]);
+  }, [allProducts, category, query]);
   const totalPages = Math.max(1, Math.ceil(products.length / 10));
   const current = products.slice((page - 1) * 10, page * 10);
 
-  const remove = product => {
+  const remove = async (product) => {
     if (!window.confirm('Delete ' + product.name + '?')) return;
-    const saved = readStorage('woodmart-products', []).filter(item => String(item.id) !== String(product.id));
-    const deleted = readStorage('woodmart-deleted-products', []).map(String);
-    writeStorage('woodmart-products', saved);
-    if (!deleted.includes(String(product.id))) writeStorage('woodmart-deleted-products', [...deleted, String(product.id)]);
-    toast.success('Product deleted');
-    setHidden([...hidden, String(product.id)]);
+    try {
+      const { error } = await supabase
+        .from('products')
+        .delete()
+        .eq('id', product.id);
+      if (error) throw error;
+      toast.success('Product deleted');
+      refetch();
+    } catch (err) {
+      console.error('Delete error:', err);
+      toast.error('Failed to delete product');
+    }
   };
 
   return (
@@ -61,7 +65,7 @@ export default function AdminProducts() {
                 <td className="p-3 font-medium">{product.name}</td>
                 <td className="p-3">{product.category}</td>
                 <td className="p-3">{formatPrice(product.price)}</td>
-                <td className="p-3">{product.stockCount}</td>
+                <td className="p-3">{product.stockCount || product.stock_count}</td>
                 <td className="p-3">{product.badge ? <Badge>{product.badge}</Badge> : 'None'}</td>
                 <td className="p-3">
                   <div className="flex gap-2">

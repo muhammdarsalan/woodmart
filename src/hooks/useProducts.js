@@ -1,17 +1,34 @@
-import { useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { supabase } from '../lib/supabase';
 import { products as hardcoded } from '../data/products';
 
 export default function useProducts() {
-  return useMemo(() => {
+  const [products, setProducts] = useState(hardcoded);
+  const [loading, setLoading] = useState(true);
+
+  const fetchProducts = useCallback(async () => {
     try {
-      const saved = JSON.parse(localStorage.getItem('woodmart-products') || '[]');
-      const deleted = JSON.parse(localStorage.getItem('woodmart-deleted-products') || '[]');
-      const validSaved = Array.isArray(saved) ? saved : [];
-      const validDeleted = Array.isArray(deleted) ? deleted.map(String) : [];
-      const filtered = hardcoded.filter(product => !validDeleted.includes(String(product.id)));
-      return [...validSaved, ...filtered];
-    } catch {
-      return Array.isArray(hardcoded) ? hardcoded : [];
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      if (data && data.length > 0) {
+        setProducts(data);
+      } else {
+        setProducts(hardcoded);
+      }
+    } catch (err) {
+      console.error('Fetch products error:', err);
+      setProducts(hardcoded);
+    } finally {
+      setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
+  return { products, loading, refetch: fetchProducts };
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import DeliveryForm from '../components/checkout/DeliveryForm';
 import OrderReview from '../components/checkout/OrderReview';
 import OrderSuccess from '../components/checkout/OrderSuccess';
@@ -8,6 +9,7 @@ import StepIndicator from '../components/checkout/StepIndicator';
 import Button from '../components/ui/Button';
 import { useCartStore } from '../store/cartStore';
 import formatPrice from '../utils/formatPrice';
+import { supabase } from '../lib/supabase';
 
 const emptyDelivery = {
   fullName: '',
@@ -30,23 +32,27 @@ export default function Checkout() {
   const [payment, setPayment] = useState({ method: 'Cash on Delivery', paid: false });
   const [successId, setSuccessId] = useState('');
 
-  const placeOrder = () => {
-    const id = 'WM-' + Math.random().toString(36).slice(2, 8).toUpperCase();
-    const order = {
-      id,
-      date: new Date().toISOString(),
-      customer: delivery,
-      items,
-      subtotal,
-      deliveryFee,
-      total,
-      paymentMethod: payment.method,
-      status: 'Pending'
-    };
-    const saved = JSON.parse(localStorage.getItem('woodmart-orders') || '[]');
-    localStorage.setItem('woodmart-orders', JSON.stringify([order, ...saved]));
-    clearCart();
-    setSuccessId(id);
+  const placeOrder = async () => {
+    try {
+      const id = 'WM-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+      const { error } = await supabase.from('orders').insert([{
+        id,
+        date: new Date().toISOString(),
+        customer: delivery,
+        items,
+        subtotal,
+        delivery_fee: deliveryFee,
+        total,
+        payment_method: payment.method,
+        status: 'Pending'
+      }]);
+      if (error) throw error;
+      clearCart();
+      setSuccessId(id);
+    } catch (err) {
+      console.error('Order error:', err);
+      toast.error('Failed to place order');
+    }
   };
 
   if (successId) {

@@ -7,7 +7,7 @@ import QuickViewModal from '../components/shop/QuickViewModal';
 import useProducts from '../hooks/useProducts';
 
 export default function Home() {
-  const products = useProducts();
+  const { products } = useProducts();
   return (
     <>
       <Hero />

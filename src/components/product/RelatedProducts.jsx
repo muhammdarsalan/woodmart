@@ -2,7 +2,7 @@ import ProductCard from '../ui/ProductCard';
 import useProducts from '../../hooks/useProducts';
 
 export default function RelatedProducts({ product }) {
-  const products = useProducts();
+  const { products } = useProducts();
   const related = products.filter(item => item.category === product.category && item.id !== product.id).slice(0, 4);
   if (!related.length) return null;
   return (

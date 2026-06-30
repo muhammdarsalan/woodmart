@@ -10,7 +10,7 @@ import Button from '../../components/ui/Button';
 import { categories } from '../../data/categories';
 import useProducts from '../../hooks/useProducts';
 import { handleImageError } from '../../utils/images';
-import { readStorage, writeStorage } from '../../utils/storage';
+import { supabase } from '../../lib/supabase';
 
 const schema = z.object({
   name: z.string().min(2),
@@ -43,7 +43,7 @@ function slugify(value) {
 export default function AddEditProduct() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const products = useProducts();
+  const { products } = useProducts();
   const editing = Boolean(id);
   const existing = products.find(product => String(product.id) === String(id));
   const [images, setImages] = useState(existing?.images || []);
@@ -53,9 +53,9 @@ export default function AddEditProduct() {
     slug: existing?.slug || '',
     category: existing?.category || 'Sofas',
     subcategory: existing?.subcategory || '',
-    shortDesc: existing?.shortDesc || '',
+    shortDesc: existing?.shortDesc || existing?.short_desc || '',
     description: existing?.description || '<p>Premium Wood Mart furniture piece.</p>',
-    originalPrice: existing?.originalPrice || 100000,
+    originalPrice: existing?.originalPrice || existing?.original_price || 100000,
     price: existing?.price || 90000,
     material: existing?.material || 'Sheesham',
     sku: existing?.sku || 'WM-' + Math.random().toString(36).slice(2, 7).toUpperCase(),
@@ -63,13 +63,13 @@ export default function AddEditProduct() {
     width: existing?.dimensions?.width || 40,
     height: existing?.dimensions?.height || 40,
     depth: existing?.dimensions?.depth || 40,
-    stockCount: existing?.stockCount || 5,
+    stockCount: existing?.stockCount || existing?.stock_count || 5,
     badge: existing?.badge || '',
-    inStock: existing?.inStock ?? true,
-    isFeatured: existing?.isFeatured || false,
-    isNew: existing?.isNew || false,
-    isOnSale: existing?.isOnSale || false,
-    tags: existing?.tags?.join(', ') || ''
+    inStock: existing?.inStock ?? existing?.in_stock ?? true,
+    isFeatured: existing?.isFeatured ?? existing?.is_featured ?? false,
+    isNew: existing?.isNew ?? existing?.is_new ?? false,
+    isOnSale: existing?.isOnSale ?? existing?.is_on_sale ?? false,
+    tags: (existing?.tags || []).join?.(', ') || ''
   }), [existing]);
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({ resolver: zodResolver(schema), defaultValues });
   const watchedName = watch('name');
@@ -92,52 +92,65 @@ export default function AddEditProduct() {
     maxSize: 5 * 1024 * 1024
   });
 
-  const save = data => {
-    const productId = existing?.id || uuidv4();
-    const originalPrice = Number(data.originalPrice);
-    const price = Number(data.price);
-    const product = {
-      id: productId,
-      slug: data.slug,
-      name: data.name,
-      category: data.category,
-      subcategory: data.subcategory,
-      shortDesc: data.shortDesc,
-      description: data.description,
-      price,
-      originalPrice,
-      discount: originalPrice > price ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0,
-      currency: 'PKR',
-      material: data.material,
-      colors,
-      dimensions: { width: Number(data.width), height: Number(data.height), depth: Number(data.depth), unit: 'inches' },
-      weight: data.weight,
-      rating: existing?.rating || 4.8,
-      reviewCount: existing?.reviewCount || 0,
-      badge: data.badge || null,
-      images: images.length ? images : [
-        'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80&fit=crop',
-        'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=900&q=80&fit=crop',
-        'https://images.unsplash.com/photo-1540574163026-643ea20ade25?w=900&q=80&fit=crop',
-        'https://images.unsplash.com/photo-1519961655809-34fa156820ff?w=900&q=80&fit=crop'
-      ],
-      inStock: Boolean(data.inStock),
-      stockCount: Number(data.stockCount),
-      isNew: Boolean(data.isNew),
-      isFeatured: Boolean(data.isFeatured),
-      isOnSale: Boolean(data.isOnSale) || originalPrice > price,
-      tags: String(data.tags || '').split(',').map(tag => tag.trim()).filter(Boolean),
-      sku: data.sku,
-      reviews: existing?.reviews || []
-    };
-    const saved = readStorage('woodmart-products', []).filter(item => String(item.id) !== String(productId));
-    writeStorage('woodmart-products', [product, ...saved]);
-    if (String(productId).startsWith('wm-')) {
-      const deleted = readStorage('woodmart-deleted-products', []).map(String);
-      if (!deleted.includes(String(productId))) writeStorage('woodmart-deleted-products', [...deleted, String(productId)]);
+  const save = async (data) => {
+    try {
+      const productId = existing?.id || uuidv4();
+      const originalPrice = Number(data.originalPrice);
+      const price = Number(data.price);
+      const productData = {
+        id: productId,
+        slug: data.slug,
+        name: data.name,
+        category: data.category,
+        subcategory: data.subcategory,
+        short_desc: data.shortDesc,
+        description: data.description,
+        price,
+        original_price: originalPrice,
+        discount: originalPrice > price ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0,
+        currency: 'PKR',
+        material: data.material,
+        colors,
+        dimensions: { width: Number(data.width), height: Number(data.height), depth: Number(data.depth), unit: 'inches' },
+        weight: data.weight,
+        rating: existing?.rating || 4.8,
+        review_count: existing?.reviewCount || existing?.review_count || 0,
+        badge: data.badge || null,
+        images: images.length ? images : [
+          'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80&fit=crop',
+          'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=900&q=80&fit=crop',
+          'https://images.unsplash.com/photo-1540574163026-643ea20ade25?w=900&q=80&fit=crop',
+          'https://images.unsplash.com/photo-1519961655809-34fa156820ff?w=900&q=80&fit=crop'
+        ],
+        in_stock: Boolean(data.inStock),
+        stock_count: Number(data.stockCount),
+        is_new: Boolean(data.isNew),
+        is_featured: Boolean(data.isFeatured),
+        is_on_sale: Boolean(data.isOnSale) || originalPrice > price,
+        tags: String(data.tags || '').split(',').map(tag => tag.trim()).filter(Boolean),
+        sku: data.sku,
+        reviews: existing?.reviews || []
+      };
+
+      if (editing) {
+        const { error } = await supabase
+          .from('products')
+          .update(productData)
+          .eq('id', productId);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase
+          .from('products')
+          .insert([productData]);
+        if (error) throw error;
+      }
+
+      toast.success(editing ? 'Product updated' : 'Product added');
+      navigate('/admin/products');
+    } catch (err) {
+      console.error('Publish error:', err);
+      toast.error('Failed to publish product');
     }
-    toast.success(editing ? 'Product updated' : 'Product added');
-    navigate('/admin/products');
   };
 
   return (

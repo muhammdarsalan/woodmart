@@ -10,7 +10,7 @@ import useProducts from '../hooks/useProducts';
 
 export default function ProductDetail() {
   const { slug } = useParams();
-  const products = useProducts();
+  const { products } = useProducts();
   const product = products.find(item => item.slug === slug);
 
   if (!product) {

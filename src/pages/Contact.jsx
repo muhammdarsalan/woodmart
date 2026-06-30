@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { z } from 'zod';
 import Button from '../components/ui/Button';
+import { supabase } from '../lib/supabase';
 
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
@@ -15,13 +16,28 @@ const schema = z.object({
 
 export default function Contact() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: zodResolver(schema) });
-  const submit = data => {
-    const saved = JSON.parse(localStorage.getItem('woodmart-messages') || '[]');
-    const message = { id: Date.now(), ...data, date: new Date().toISOString(), isRead: false };
-    localStorage.setItem('woodmart-messages', JSON.stringify([message, ...saved]));
-    toast.success('Message sent');
-    reset();
+
+  const submit = async (data) => {
+    try {
+      const { error } = await supabase.from('messages').insert([{
+        id: Date.now(),
+        name: data.name,
+        phone: data.phone,
+        email: data.email || null,
+        category: data.category,
+        subject: data.subject || null,
+        message: data.message,
+        is_read: false
+      }]);
+      if (error) throw error;
+      toast.success('Message sent');
+      reset();
+    } catch (err) {
+      console.error('Contact error:', err);
+      toast.error('Failed to send message');
+    }
   };
+
   return (
     <main className="container-page py-10">
       <h1 className="text-3xl font-semibold text-primary">Contact Wood Mart</h1>
@@ -32,7 +48,7 @@ export default function Contact() {
             <p>Main G.T. Rd, opposite Science School Rd, T Chowk, Islamabad, 44000</p>
             <p>0345-9229581 / 0316-5344694</p>
             <p>szahid701@gmail.com</p>
-            <p>Mon-Thu & Sat-Sun: 10:30AM-9:30PM</p>
+            <p>Mon-Thu &amp; Sat-Sun: 10:30AM-9:30PM</p>
             <p className="font-medium text-primary">Friday: Closed</p>
           </div>
           <iframe
