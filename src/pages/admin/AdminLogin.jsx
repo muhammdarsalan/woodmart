@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 import { ADMIN_EMAIL, ADMIN_PASSWORD, TOKEN_KEY, TOKEN_VALUE } from '../../admin/config';
 import { handleImageError } from '../../utils/images';
+import { supabase } from '../../lib/supabase';
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -12,15 +13,24 @@ export default function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
 
-  const login = event => {
+  const login = async event => {
     event.preventDefault();
-    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      localStorage.setItem(TOKEN_KEY, TOKEN_VALUE);
-      navigate('/admin/dashboard');
+    
+    // Authenticate with Supabase so that auth.uid() is set for RLS
+    const { error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (authError) {
+      setError(true);
+      setTimeout(() => setError(false), 500);
       return;
     }
-    setError(true);
-    setTimeout(() => setError(false), 500);
+
+    // Still maintain the token in localStorage for legacy route protection
+    localStorage.setItem(TOKEN_KEY, TOKEN_VALUE);
+    navigate('/admin/dashboard');
   };
 
   return (

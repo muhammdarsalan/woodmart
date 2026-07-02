@@ -2,6 +2,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { ExternalLink, LayoutDashboard, LogOut, MessageSquare, Package, ShoppingBag, Tags } from 'lucide-react';
 import { TOKEN_KEY } from '../../admin/config';
 import { readStorage } from '../../utils/storage';
+import { supabase } from '../../lib/supabase';
 
 export default function AdminLayout() {
   const navigate = useNavigate();
@@ -13,7 +14,8 @@ export default function AdminLayout() {
     ['Orders', '/admin/orders', ShoppingBag],
     ['Messages', '/admin/messages', MessageSquare]
   ];
-  const logout = () => {
+  const logout = async () => {
+    await supabase.auth.signOut();
     localStorage.removeItem(TOKEN_KEY);
     navigate('/admin/login');
   };
